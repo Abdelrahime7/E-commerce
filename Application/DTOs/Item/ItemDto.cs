@@ -7,6 +7,9 @@ namespace Application.DTOs.Item
     {
         public string? Name { get; set; }
         public string? Description { get; set; }
+        public int InventoryDevision { get; set; }
+        public int ItemQuantity { get; set; }
+
         public decimal Price { get; set; }
         public DateTime ExpireDate { get; set; }
         public DateTime ProdDate { get; set; }

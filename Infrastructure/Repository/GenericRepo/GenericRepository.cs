@@ -27,8 +27,8 @@ namespace Infrastructure.Repository.GenericRepo
             {
                 await _dbSet.AddAsync(entity);
 
-                bool deferSave = entity is Customer || entity is User;
-                if (!deferSave)
+                bool deferSave = entity is Review || entity is ItemGallery;
+                if (deferSave)
                 {
                     await _dbContext.SaveChangesAsync();
                 }
