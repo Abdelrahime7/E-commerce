@@ -1,5 +1,6 @@
 using Application.Interface;
 using Application.Mapper.CustomersProfile;
+using Application.Moduels.Order.Handlers;
 using Domain.entities;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,7 +12,7 @@ public static class DependencyInjection
     {
         services.AddMediatR(Conf =>
         {
-            Conf.RegisterServicesFromAssemblies();
+            Conf.RegisterServicesFromAssemblies(typeof(CreateOrderHandler).Assembly);
 
         }
         );

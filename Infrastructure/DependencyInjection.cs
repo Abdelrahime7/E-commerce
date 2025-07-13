@@ -1,4 +1,5 @@
 using Application.Interface;
+using Application.Interfaces.Generic;
 using Application.Interfaces.Specific.IunitOW;
 using Domain.Interfaces.Generic;
 using Infrastructure.ADbContext;
@@ -19,6 +20,8 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
         //Register your services here
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
         services.AddScoped<ICustomerRepository,CustomerRepository>();
         services.AddScoped<IInventoryRepository, InventoryRepository>();
         services.AddScoped<IItemRepository, ItemRepository>();
