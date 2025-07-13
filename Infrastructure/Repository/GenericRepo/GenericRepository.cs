@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.Generic;
 using Domain.entities;
 using Domain.Interface;
+using Infrastructure.ADbContext;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.GenericRepo
@@ -8,10 +9,10 @@ namespace Infrastructure.Repository.GenericRepo
     public class GenericRepository<T> : IGenericRepository<T> where T : class,IEntity
     {
 
-       private readonly  DbContext  _dbContext ;
+       private readonly AppDbContext _dbContext ;
        private readonly DbSet<T> _dbSet;
 
-        public GenericRepository(DbContext context)
+        public GenericRepository(AppDbContext context)
         {
             _dbContext = context;
             _dbSet = _dbContext.Set<T>();

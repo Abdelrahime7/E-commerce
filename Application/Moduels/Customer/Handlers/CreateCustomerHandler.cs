@@ -14,7 +14,7 @@ namespace Application.Moduels.Customer.Handlers
         private readonly ICustomerUnitOfWork _unitOfWork;
 
 
-        protected CreateCustomerHandler(IMapper mapper, ICustomerUnitOfWork unitOfWork)
+        public CreateCustomerHandler(IMapper mapper, ICustomerUnitOfWork unitOfWork)
         {
 
             _mapper = mapper;

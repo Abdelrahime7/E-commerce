@@ -21,7 +21,7 @@ namespace Application.Moduels.Item.Handlers
         private readonly IItemUnitOfWork _unitOfWork;
 
 
-        protected CreateItemHandler(IMapper mapper, IItemUnitOfWork unitOfWork)
+        public CreateItemHandler(IMapper mapper, IItemUnitOfWork unitOfWork)
         {
 
             _mapper = mapper;

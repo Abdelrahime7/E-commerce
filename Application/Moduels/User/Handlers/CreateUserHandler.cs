@@ -17,7 +17,7 @@ namespace Application.Moduels.User.Handlers
         private readonly IUserUnitOfWork _unitOfWork;
 
 
-        protected CreateUserHandler(IMapper mapper, IUserUnitOfWork unitOfWork)
+        public CreateUserHandler(IMapper mapper, IUserUnitOfWork unitOfWork)
         {
 
             _mapper = mapper;

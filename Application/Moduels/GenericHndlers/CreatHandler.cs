@@ -18,7 +18,7 @@ namespace Application.Moduels.GenericHndlers
         private readonly IGenericRepository<IEntity> _repository;
 
 
-        protected CreatHandler( IMapper mapper, IGenericRepository<IEntity> repository)
+        public CreatHandler( IMapper mapper, IGenericRepository<IEntity> repository)
         {
            
             _mapper = mapper;

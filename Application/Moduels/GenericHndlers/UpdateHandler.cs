@@ -21,7 +21,7 @@ namespace Application.Moduels.GenericHndlers
         private readonly IGenericRepository<IEntity> _repository;
 
 
-        protected UpdateHandler( IMapper mapper, IGenericRepository<IEntity> repository)
+        public UpdateHandler( IMapper mapper, IGenericRepository<IEntity> repository)
         {
            
             _mapper = mapper;
