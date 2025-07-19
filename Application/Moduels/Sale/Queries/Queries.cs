@@ -7,5 +7,7 @@ namespace Application.Moduels.Sale.Queries
     public class Queries
     {
         public record GetSaleByIdQuery(int Id) : IRequest<SaleDto>;
+        public record GetAllSaleQuery : IRequest<IReadOnlyCollection<SaleDto>>;
+
     }
 }

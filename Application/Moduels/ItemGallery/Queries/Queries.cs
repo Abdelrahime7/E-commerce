@@ -7,5 +7,7 @@ namespace Application.Moduels.ItemGallery.Queries
     public class Queries
     {
         public record GetItemGalleryByIdQuery(int Id) : IRequest<ItemGalleryDto>;
+        public record GetAllItemGalleryQuery : IRequest<IReadOnlyCollection<ItemGalleryDto>>;
+
     }
 }

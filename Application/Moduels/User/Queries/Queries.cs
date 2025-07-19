@@ -6,5 +6,7 @@ namespace Application.Moduels.User.Queries
      public class Queries
     {
         public record GetUserByIdQuery(int Id) : IRequest<UserDto>;
+        public record GetAllUserQuery : IRequest<IReadOnlyCollection<UserDto>>;
+
     }
 }

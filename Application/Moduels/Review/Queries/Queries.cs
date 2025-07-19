@@ -7,5 +7,7 @@ namespace Application.Moduels.Review.Queries
     public class Queries
     {
         public record GetReviewByIdQuery(int Id) : IRequest<ReviewDto>;
+        public record GetAllReviewQuery : IRequest<IReadOnlyCollection<ReviewDto>>;
+
     }
 }
