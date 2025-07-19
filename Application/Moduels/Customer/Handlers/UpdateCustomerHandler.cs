@@ -8,9 +8,9 @@ using Application.Interfaces.Generic;
 
 namespace Application.Moduels.Customer.Handlers
 {
-    public class UpdateCustomerHandler : UpdateHandler<UpdateCustomerCommand,CustomerDto>
+    public class DeleteInventoryHandler : UpdateHandler<UpdateCustomerCommand,CustomerDto>
     {
-        public UpdateCustomerHandler(IMapper mapper, IGenericRepository<IEntity> repository) : base(mapper, repository)
+        public DeleteInventoryHandler(IMapper mapper, IGenericRepository<IEntity> repository) : base(mapper, repository)
         {
         }
 

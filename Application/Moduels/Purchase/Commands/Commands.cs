@@ -7,5 +7,6 @@ namespace Application.Moduels.Purchase.Commands
 {
     public record CreatePurchaseCommand(PurchasHistoryDto purhcaseDto) : IRequest<int>;
     public record UpdatePurchaseCommand(PurchasHistoryResponse Response) : IRequest<PurchasHistoryDto>;
+    public record DeletePurchaseCommand(int ID ) : IRequest<bool>;
 
 }

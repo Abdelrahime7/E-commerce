@@ -3,6 +3,7 @@ using Domain.entities;
 using Domain.Interface;
 using Infrastructure.ADbContext;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Infrastructure.Repository.GenericRepo
 {
@@ -65,7 +66,10 @@ namespace Infrastructure.Repository.GenericRepo
         {
             try
             {
-                 return await  _dbSet .FindAsync(id);
+                return await _dbSet.FindAsync(id);
+              
+                    
+
             }
             catch ( Exception ex) { throw new Exception(ex.Message); }
         }
