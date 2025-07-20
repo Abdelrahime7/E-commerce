@@ -1,6 +1,5 @@
 ﻿
 
-using Application.Interface;
 
 namespace Domain.Interfaces.Generic
     

@@ -1,27 +1,27 @@
 ﻿
 
-using Domain.Interface;
+
 using Application.Moduels.Review.Commands;
 using Application.Moduels.GenericHndlers;
 
-using Application.Interfaces.Generic;
+
 using Application.Interface;
 
 namespace Application.Moduels.Review.Handlers
 {
-    public class DeleteReviewHandler :DeleteHandler<DeleteReviewCommand>
+    public class DeleteReviewHandler(IReviewRepository repository) : DeleteHandler<DeleteReviewCommand>
     {
-        public DeleteReviewHandler( IReviewRepository repository) : base((IGenericRepository<IEntity>)repository)
-    
+        private readonly IReviewRepository _repository = repository;
+
+       public override async Task<bool> Handle(DeleteReviewCommand request, CancellationToken cancellationToken)
         {
+            var review = await _repository.GetByIDAsync(request.ID);
+            if (review == null) 
+                return false;
+            await _repository.DeleteAsync(review.Id);
+            return true;
+
         }
-
-        protected override int GetID(DeleteReviewCommand command)=>command.ID;
-
-
-
-
-
     }
 
 

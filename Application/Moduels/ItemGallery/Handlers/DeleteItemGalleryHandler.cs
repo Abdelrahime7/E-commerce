@@ -1,26 +1,23 @@
 ﻿
-using Domain.Interface;
 using Application.Moduels.ItemGallery.Commands;
 using Application.Moduels.GenericHndlers;
-
-using Application.Interfaces.Generic;
 using Application.Interface;
 
 namespace Application.Moduels.ItemGallery.Handlers
 {
-    public class DeleteItemGalleryHandler :DeleteHandler<DeleteItemGalleryCommand>
+    public class DeleteItemGalleryHandler(IItemGalleryRepository repository) : DeleteHandler<DeleteItemGalleryCommand>
     {
-        public DeleteItemGalleryHandler( IItemGalleryRepository repository) : base((IGenericRepository<IEntity>)repository)
-    
+        private readonly IItemGalleryRepository _repository = repository;
+
+        public override async Task<bool> Handle(DeleteItemGalleryCommand request, CancellationToken cancellationToken)
         {
+            var itemGallery = await _repository.GetByIDAsync(request.ID);
+            if (itemGallery != null) {
+                await _repository.DeleteAsync(request.ID);
+                return true;
+            }
+            return false;
         }
-
-        protected override int GetID(DeleteItemGalleryCommand command)=>command.ID;
-
-
-
-
-
     }
 
 
