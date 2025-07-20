@@ -7,7 +7,7 @@ namespace Application.Moduels.Item.Queries
     public class Queries
     {
         public record GetItemByIdQuery(int Id) : IRequest<ItemDto>;
-        public record GetAllItemQuery : IRequest<IReadOnlyCollection<ItemDto>>;
+        public record GetAllItemsQuery : IRequest<IReadOnlyCollection<ItemDto>>;
 
     }
 }

@@ -16,18 +16,4 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.6" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Moduels\User\Queries\" />
-    <Folder Include="Moduels\Person\Queries\" />
-    <Folder Include="Moduels\Order\Queries\" />
-    <Folder Include="Moduels\Purchase\Queries\" />
-    <Folder Include="Moduels\Review\Queries\" />
-    <Folder Include="Moduels\Sale\Queries\" />
-    <Folder Include="Moduels\ItemGallery\Queries\" />
-    <Folder Include="Moduels\Invoice\Queries\" />
-    <Folder Include="Moduels\Inventory\Queries\" />
-    <Folder Include="Moduels\Item\Queries\" />
-    <Folder Include="Moduels\Customer\Queries\" />
-  </ItemGroup>
-
 </Project>
