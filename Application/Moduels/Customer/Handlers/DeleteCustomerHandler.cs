@@ -21,6 +21,7 @@ namespace Application.Moduels.Customer.Handlers
                    {
                         await _unitOfWork.PersonRepository.DeleteAsync(customer.PersonID);
                         await _unitOfWork.CustomerRepository.DeleteAsync(customer.Id);
+                        await _unitOfWork.SaveAsync();
                         return true;
                     }
 

@@ -17,6 +17,7 @@ namespace Application.Moduels.Item.Handlers
             {
                 await _unitOfWork.InventoryRepository.DeleteAsync(item.Inventory.Id);
                 await _unitOfWork.ItemRepository.DeleteAsync(item.Id);
+                await _unitOfWork.SaveAsync();
                 return true;
             }
 

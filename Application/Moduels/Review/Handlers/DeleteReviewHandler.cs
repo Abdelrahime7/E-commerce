@@ -19,6 +19,7 @@ namespace Application.Moduels.Review.Handlers
             if (review == null) 
                 return false;
             await _repository.DeleteAsync(review.Id);
+           
             return true;
 
         }
