@@ -8,28 +8,27 @@ using Application.Interfaces.Specific.IunitOW;
 
 namespace Application.Moduels.Order.Handlers
 {
-    public class DeleteOrderHandler(IOrderUnitOfWork unitOfWork) : DeleteHandler<DeleteOrderCommand>
+    public class DeleteOrderHandler(IOrderUnitOfWork unitOfWork) : DeleteHandler<SoftDeleteOrderCommand>
     {
 
         private readonly IOrderUnitOfWork _unitOfWork = unitOfWork;
 
 
-        public override async Task<bool> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
+        public override async Task<bool> Handle(SoftDeleteOrderCommand request, CancellationToken cancellationToken)
         {
             var order = await _unitOfWork.OrderRepository.GetByIDAsync(request.ID);
             if (order == null)
                 return false;
             var invoices = order.invoices;
             foreach (var invoice in invoices) { 
-                await _unitOfWork.InvoiceRepository.DeleteAsync(invoice.Id);
+                await _unitOfWork.InvoiceRepository.SoftDeleteAsync(invoice.Id);
             }
 
-            await _unitOfWork.PurchaseRepository.DeleteAsync(order.PurchaseHistory.Id);
-            await _unitOfWork.SaleRepository.DeleteAsync(order.Sale.Id);
-            await _unitOfWork.OrderRepository.DeleteAsync(order.Id);
+            await _unitOfWork.PurchaseRepository.SoftDeleteAsync(order.PurchaseHistory.Id);
+            await _unitOfWork.SaleRepository.SoftDeleteAsync(order.Sale.Id);
+            await _unitOfWork.OrderRepository.SoftDeleteAsync(order.Id);
 
-            await _unitOfWork.SaveAsync();
-            return true;
+            return await _unitOfWork.SaveAsync() > 0;
 
 
         }

@@ -5,7 +5,7 @@ using Application.Moduels.GenericHndlers;
 namespace Application.Moduels.Customer.Handlers
 {
   
-    public class DeleteCustomerHandler : DeleteHandler<DeleteCustomerCommand>
+    public class DeleteCustomerHandler : DeleteHandler<SoftDeleteCustomerCommand>
     {
         private readonly ICustomerUnitOfWork _unitOfWork;
 
@@ -14,15 +14,15 @@ namespace Application.Moduels.Customer.Handlers
             _unitOfWork = unitOfWork;
         }
 
-        public override async Task<bool> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
+        public override async Task<bool> Handle(SoftDeleteCustomerCommand request, CancellationToken cancellationToken)
         {
             var customer = await _unitOfWork.CustomerRepository.GetByIDAsync(request.ID);
                  if (customer != null)
                    {
-                        await _unitOfWork.PersonRepository.DeleteAsync(customer.PersonID);
-                        await _unitOfWork.CustomerRepository.DeleteAsync(customer.Id);
-                        await _unitOfWork.SaveAsync();
-                        return true;
+                        await _unitOfWork.PersonRepository.SoftDeleteAsync(customer.PersonID);
+                        await _unitOfWork.CustomerRepository.SoftDeleteAsync(customer.Id);
+                         return await _unitOfWork.SaveAsync()>0;
+                        
                     }
 
                    return false;

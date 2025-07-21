@@ -15,7 +15,7 @@ namespace Infrastructure.Repository.GenericRepo
         IPersonRepository ICustomerUnitOfWork.PersonRepository => personRepository;
 
 
-        public async Task SaveAsync() => await _appDbContext.SaveChangesAsync();
+        public async Task<int> SaveAsync() => await _appDbContext.SaveChangesAsync();
         
         public void Dispose()=>_appDbContext.Dispose();
 

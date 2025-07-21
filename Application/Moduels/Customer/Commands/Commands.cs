@@ -10,7 +10,10 @@ namespace Application.Moduels.Customer.Commands
    public record UpdateCustomerCommand(CustomerResponse Response) : IRequest<CustomerDto>;
     
     public record DeleteCustomerCommand(int ID) : IRequest<bool>;
- 
+
+    public record SoftDeleteCustomerCommand(int ID) : IRequest<bool>;
+
+
 
 
 

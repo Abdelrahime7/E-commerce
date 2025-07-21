@@ -24,7 +24,7 @@ namespace Infrastructure.Repository.GenericRepo
         public void Dispose() => _appDbContext.Dispose();
 
 
-        public async Task SaveAsync() => await _appDbContext.SaveChangesAsync();
+        public async Task<int> SaveAsync() => await _appDbContext.SaveChangesAsync();
        
     }
 }

@@ -14,7 +14,7 @@ namespace Infrastructure.Repository.GenericRepo
 
         public IItemRepository ItemRepository => itemRepository;
 
-        public async Task SaveAsync() => await _appDbContext.SaveChangesAsync();
+        public async Task<int> SaveAsync() => await _appDbContext.SaveChangesAsync();
 
         public void Dispose()=>_appDbContext.Dispose();
 

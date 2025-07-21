@@ -5,20 +5,19 @@ using Application.Interfaces.Specific.IunitOW;
 
 namespace Application.Moduels.Item.Handlers
 {
-    public class DeleteItemHandler(IItemUnitOfWork unitOfWork) : DeleteHandler<DeleteItemCommnd>
+    public class DeleteItemHandler(IItemUnitOfWork unitOfWork) : DeleteHandler<SoftDeleteItemCommand>
     {
         private readonly IItemUnitOfWork _unitOfWork = unitOfWork;
 
-        public override async Task<bool> Handle(DeleteItemCommnd request, CancellationToken cancellationToken)
+        public override async Task<bool> Handle(SoftDeleteItemCommand request, CancellationToken cancellationToken)
 
         {
             var item = await _unitOfWork.ItemRepository.GetByIDAsync(request.ID);
             if (item != null)
             {
-                await _unitOfWork.InventoryRepository.DeleteAsync(item.Inventory.Id);
-                await _unitOfWork.ItemRepository.DeleteAsync(item.Id);
-                await _unitOfWork.SaveAsync();
-                return true;
+                await _unitOfWork.InventoryRepository.SoftDeleteAsync(item.Inventory.Id);
+                await _unitOfWork.ItemRepository.SoftDeleteAsync(item.Id);
+               return await _unitOfWork.SaveAsync() > 0;
             }
 
             return false;

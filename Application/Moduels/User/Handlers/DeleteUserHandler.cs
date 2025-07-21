@@ -4,20 +4,21 @@ using Application.Interfaces.Specific.IunitOW;
 
 namespace Application.Moduels.User.Handlers
 {
-    public class DeleteUserHandler(IUserUnitOfWork unitOfWork) : DeleteHandler<DeleteUserCommand>
+    public class DeleteUserHandler(IUserUnitOfWork unitOfWork) : DeleteHandler<SoftDeleteUserCommand>
     {
         private readonly IUserUnitOfWork _unitOfWork = unitOfWork;
 
-        public override async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        public override async Task<bool> Handle(SoftDeleteUserCommand request, CancellationToken cancellationToken)
         {
             var user = await _unitOfWork.UserRepository.GetByIDAsync(request.ID);
             if (user == null) 
                 return false;
-            await _unitOfWork.PersonRepository.DeleteAsync(user.PersonID);
-            await _unitOfWork.UserRepository.DeleteAsync(user.Id);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.PersonRepository.SoftDeleteAsync(user.PersonID);
+            await _unitOfWork.UserRepository.SoftDeleteAsync(user.Id);
 
-            return true;
+            return await _unitOfWork.SaveAsync() >0;
+
+            
 
         }
 
