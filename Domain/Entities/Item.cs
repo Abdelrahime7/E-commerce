@@ -4,7 +4,7 @@ using System;
 
 namespace Domain.entities;
 
-public class Item:IEntity
+public class Item:IEntity,ISoftDelete
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -16,6 +16,5 @@ public class Item:IEntity
 
     public  Inventory Inventory {  get; set; }
     public ItemGallery  ItemGallery { get; set; }
-    
-   
+    public bool IsDeleted { get; set; }
 }
