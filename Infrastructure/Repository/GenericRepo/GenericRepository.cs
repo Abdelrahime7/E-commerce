@@ -3,7 +3,7 @@ using Domain.entities;
 using Domain.Interface;
 using Infrastructure.ADbContext;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography;
 
 namespace Infrastructure.Repository.GenericRepo
 {
@@ -45,6 +45,16 @@ namespace Infrastructure.Repository.GenericRepo
 
         }
 
+        public async Task<int> SoftDeleteAsync(int id) 
+        {
+            var entity = await _dbSet .FindAsync(id);
+            if (entity is null) return 0;
+            entity.IsDeleted = true;
+            _dbSet.Update(entity);
+
+          return  await _dbContext.SaveChangesAsync();
+        }
+       
         public async Task <bool> DeleteAsync(int id)
         {
             try

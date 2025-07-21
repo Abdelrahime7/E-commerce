@@ -7,7 +7,7 @@ namespace Application.Interface
 {
     public interface ICustomerRepository:IGenericRepository<Customer>
     {
-
+       
 
     }
 
