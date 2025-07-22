@@ -1,6 +1,4 @@
-﻿using Domain.entities;
-
-namespace Application.DTOs.Purchase
+﻿namespace Application.DTOs.Purchase
 {
     public record PurchasHistoryDto
     {
