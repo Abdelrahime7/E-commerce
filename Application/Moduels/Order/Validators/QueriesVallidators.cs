@@ -3,9 +3,9 @@ using static Application.Moduels.Order.Queries.Queries;
 
 namespace Application.Moduels.Order.Validators
 {
-    public class GetByIdValidator : AbstractValidator<GetOrderByIdQuery>
+    public class GetOrderByIdValidator : AbstractValidator<GetOrderByIdQuery>
     {
-        public GetByIdValidator()
+        public GetOrderByIdValidator()
         {
             RuleFor(C => C.Id).NotEqual(0).NotEmpty().WithMessage("ID is required");
         }

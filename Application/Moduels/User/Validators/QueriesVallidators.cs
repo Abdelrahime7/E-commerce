@@ -3,9 +3,9 @@ using static Application.Moduels.User.Queries.Queries;
 
 namespace Application.Moduels.User.Validators
 {
-    public class GetByIdValidator : AbstractValidator<GetUserByIdQuery>
+    public class GetUserByIdValidator : AbstractValidator<GetUserByIdQuery>
     {
-        public GetByIdValidator()
+        public GetUserByIdValidator()
         {
             RuleFor(C => C.Id).NotEqual(0).NotEmpty().WithMessage("ID is required");
         }

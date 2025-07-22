@@ -3,9 +3,9 @@ using static Application.Moduels.Inventory.Queries.Queries;
 
 namespace Application.Moduels.Inventory.Validators
 {
-    public class GetByIdValidator : AbstractValidator<GetInventoryByIdQuery>
+    public class GetInventoryByIdValidator : AbstractValidator<GetInventoryByIdQuery>
     {
-        public GetByIdValidator()
+        public GetInventoryByIdValidator()
         {
             RuleFor(C => C.Id).NotEqual(0).NotEmpty().WithMessage("ID is required");
         }

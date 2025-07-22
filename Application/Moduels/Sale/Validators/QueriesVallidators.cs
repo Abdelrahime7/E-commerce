@@ -1,12 +1,12 @@
 ﻿using FluentValidation;
-using static Application.Moduels.Sale.Queries.Queries
+using static Application.Moduels.Sale.Queries.Queries;
 
 
 namespace Application.Moduels.Sale.Validators
 {
-    public class GetByIdValidator : AbstractValidator<GetSaleByIdQuery>
+    public class GetSaleByIdValidator : AbstractValidator<GetSaleByIdQuery>
     {
-        public GetByIdValidator()
+        public GetSaleByIdValidator()
         {
             RuleFor(C => C.Id).NotEqual(0).NotEmpty().WithMessage("ID is required");
         }

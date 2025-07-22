@@ -11,8 +11,8 @@ public static class DependencyInjection
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateUserHandler).Assembly));
 
         services.AddAutoMapper(typeof(CustomerMapping));
-        
 
+       
 
         return services;
     }

@@ -3,9 +3,9 @@ using static Application.Moduels.Purchase.Queries.Queries;
 
 namespace Application.Moduels.Purchase.Validators
 {
-    public class GetByIdValidator : AbstractValidator<GetPurchaseByIdQuery>
+    public class GetPurchaseByIdValidator : AbstractValidator<GetPurchaseByIdQuery>
     {
-        public GetByIdValidator()
+        public GetPurchaseByIdValidator()
         {
             RuleFor(C => C.Id).NotEqual(0).NotEmpty().WithMessage("ID is required");
         }
