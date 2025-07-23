@@ -1,4 +1,5 @@
 using Application;
+using Application.Moduels.Common.MiddleWare;
 using DotNetEnv;
 using Infrastructure;
 using Infrastructure.ADbContext;
@@ -26,6 +27,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseGlobalExceptionHandling();
 
 app.UseHttpsRedirection();
 
