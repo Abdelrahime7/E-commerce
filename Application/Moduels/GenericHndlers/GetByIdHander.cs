@@ -21,13 +21,16 @@ namespace Application.Moduels.GenericHndlers
         protected abstract int GetID(TQuery query);
         public async Task<Tdto> Handle(TQuery request, CancellationToken cancellationToken)
         {
+            try
+            {
 
-            var Entity = await _repository.GetByIDAsync(GetID(request));
-           
+                var Entity = await _repository.GetByIDAsync(GetID(request));
+
                 Tdto dto = _mapper.Map<Tdto>(Entity);
 
                 return dto;
-
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
         }
     }
 }

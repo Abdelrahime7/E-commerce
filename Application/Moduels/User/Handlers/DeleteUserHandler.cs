@@ -10,15 +10,19 @@ namespace Application.Moduels.User.Handlers
 
         public override async Task<bool> Handle(SoftDeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _unitOfWork.UserRepository.GetByIDAsync(request.ID);
-            if (user == null) 
-                return false;
-            await _unitOfWork.PersonRepository.SoftDeleteAsync(user.PersonID);
-            await _unitOfWork.UserRepository.SoftDeleteAsync(user.Id);
+            try
+            {
+                var user = await _unitOfWork.UserRepository.GetByIDAsync(request.ID);
+                if (user == null)
+                    return false;
+                await _unitOfWork.PersonRepository.SoftDeleteAsync(user.PersonID);
+                await _unitOfWork.UserRepository.SoftDeleteAsync(user.Id);
 
-            return await _unitOfWork.SaveAsync() >0;
+                return await _unitOfWork.SaveAsync() > 0;
+            }
+            catch (Exception ex) {throw new Exception(ex.Message); }
 
-            
+               
 
         }
 

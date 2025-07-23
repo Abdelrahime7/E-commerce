@@ -15,11 +15,14 @@ namespace Application.Moduels.Review.Handlers
 
        public override async Task<bool> Handle(SoftDeleteReviewCommand request, CancellationToken cancellationToken)
         {
-            var review = await _repository.GetByIDAsync(request.ID);
-            if (review == null) 
-                return false;
-           return await _repository.SoftDeleteAsync(review.Id)>0;
-           
+            try
+            {
+                var review = await _repository.GetByIDAsync(request.ID);
+                if (review == null)
+                    return false;
+                return await _repository.SoftDeleteAsync(review.Id) > 0;
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
           
 
         }

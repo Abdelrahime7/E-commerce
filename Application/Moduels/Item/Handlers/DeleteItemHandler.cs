@@ -12,14 +12,17 @@ namespace Application.Moduels.Item.Handlers
         public override async Task<bool> Handle(SoftDeleteItemCommand request, CancellationToken cancellationToken)
 
         {
-            var item = await _unitOfWork.ItemRepository.GetByIDAsync(request.ID);
-            if (item != null)
+            try
             {
-                await _unitOfWork.InventoryRepository.SoftDeleteAsync(item.Inventory.Id);
-                await _unitOfWork.ItemRepository.SoftDeleteAsync(item.Id);
-               return await _unitOfWork.SaveAsync() > 0;
+                var item = await _unitOfWork.ItemRepository.GetByIDAsync(request.ID);
+                if (item != null)
+                {
+                    await _unitOfWork.InventoryRepository.SoftDeleteAsync(item.Inventory.Id);
+                    await _unitOfWork.ItemRepository.SoftDeleteAsync(item.Id);
+                    return await _unitOfWork.SaveAsync() > 0;
+                }
             }
-
+            catch (Exception ex) { throw new Exception(ex.Message); }
             return false;
         }
     }

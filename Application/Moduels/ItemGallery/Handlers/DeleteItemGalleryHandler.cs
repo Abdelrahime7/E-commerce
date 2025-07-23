@@ -11,11 +11,16 @@ namespace Application.Moduels.ItemGallery.Handlers
 
         public override async Task<bool> Handle(SoftDeleteItemGalleryCommand request, CancellationToken cancellationToken)
         {
-            var itemGallery = await _repository.GetByIDAsync(request.ID);
-            if (itemGallery != null) {
-              return  await _repository.SoftDeleteAsync(request.ID)>0;
-              
+            try
+            {
+                var itemGallery = await _repository.GetByIDAsync(request.ID);
+                if (itemGallery != null)
+                {
+                    return await _repository.SoftDeleteAsync(request.ID) > 0;
+
+                }
             }
+            catch (Exception ex) { throw new Exception(ex.Message); }
             return false;
         }
     }

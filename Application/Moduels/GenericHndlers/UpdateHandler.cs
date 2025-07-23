@@ -31,20 +31,21 @@ namespace Application.Moduels.GenericHndlers
 
         public async Task<Tdto> Handle(TComande request, CancellationToken cancellationToken)
         {
-
-            var Entity =  await _repository.GetByIDAsync(GetId(request));
-            if (Entity is null)
+            try
             {
-                throw new Exception($"{typeof(IEntity).Name} not found.");
+                var Entity = await _repository.GetByIDAsync(GetId(request));
+                if (Entity is null)
+                {
+                    throw new Exception($"{typeof(IEntity).Name} not found.");
+                }
+
+                _mapper.Map(request, Entity);
+
+                await _repository.UpdateAsync(Entity);
+
+                return _mapper.Map<Tdto>(Entity);
             }
-
-            _mapper.Map(request, Entity);
-
-            await _repository.UpdateAsync(Entity);
-
-             return  _mapper.Map<Tdto>(Entity); 
-
-
+            catch (Exception ex) { throw new Exception(ex.Message); }
         }
 
       

@@ -28,15 +28,17 @@ namespace Application.Moduels.Customer.Handlers
             var person = _mapper.Map<Domain.entities.Person>(request);
             var customer = _mapper.Map<Domain.entities.Customer>(request);
 
-            await _unitOfWork.PersonRepository.AddAsync(person);
-            customer.Person = person;         
-            customer.PersonID = person.Id;    
-            await _unitOfWork.CustomerRepository.AddAsync(customer);
+            try
+            {
+                await _unitOfWork.PersonRepository.AddAsync(person);
+                customer.Person = person;
+                customer.PersonID = person.Id;
+                await _unitOfWork.CustomerRepository.AddAsync(customer);
 
-            await _unitOfWork.SaveAsync();    
-            return customer.Id;
-
-
+                await _unitOfWork.SaveAsync();
+                return customer.Id;
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
         }
     }
 

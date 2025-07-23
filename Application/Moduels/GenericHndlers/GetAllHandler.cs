@@ -21,10 +21,12 @@ namespace Application.Moduels.GenericHndlers
         public async Task<IReadOnlyCollection<Tdto>> Handle(Tquery request, CancellationToken cancellationToken)
 
         {
-            var entities = await _repository.GetAllAsync();
+            try
+            {
+                var entities = await _repository.GetAllAsync();
 
-          return  _mapper.Map<IReadOnlyCollection<Tdto>>(entities);
-           
+                return _mapper.Map<IReadOnlyCollection<Tdto>>(entities);
+            }catch (Exception ex) { throw new Exception(ex.Message); }
         }
     }
 }

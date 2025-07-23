@@ -16,15 +16,19 @@ namespace Application.Moduels.Customer.Handlers
 
         public override async Task<bool> Handle(SoftDeleteCustomerCommand request, CancellationToken cancellationToken)
         {
-            var customer = await _unitOfWork.CustomerRepository.GetByIDAsync(request.ID);
-                 if (customer != null)
-                   {
-                        await _unitOfWork.PersonRepository.SoftDeleteAsync(customer.PersonID);
-                        await _unitOfWork.CustomerRepository.SoftDeleteAsync(customer.Id);
-                         return await _unitOfWork.SaveAsync()>0;
-                        
-                    }
 
+            try
+            {
+                var customer = await _unitOfWork.CustomerRepository.GetByIDAsync(request.ID);
+                if (customer != null)
+                {
+                    await _unitOfWork.PersonRepository.SoftDeleteAsync(customer.PersonID);
+                    await _unitOfWork.CustomerRepository.SoftDeleteAsync(customer.Id);
+                    return await _unitOfWork.SaveAsync() > 0;
+
+                }
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
                    return false;
         }
     }

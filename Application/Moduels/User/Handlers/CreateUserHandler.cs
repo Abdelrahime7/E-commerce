@@ -26,17 +26,20 @@ namespace Application.Moduels.User.Handlers
 
         public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
+           
             var person = _mapper.Map<Domain.entities.Person>(request);
             var User = _mapper.Map<Domain.entities.User>(request);
+            try
+            {
+                await _unitOfWork.PersonRepository.AddAsync(person);
+                User.Person = person;
+                User.PersonID = person.Id;
+                await _unitOfWork.UserRepository.AddAsync(User);
 
-            await _unitOfWork.PersonRepository.AddAsync(person);
-            User.Person = person;
-            User.PersonID = person.Id;
-            await _unitOfWork.UserRepository.AddAsync(User);
-
-            await _unitOfWork.SaveAsync();
-            return User.Id;
-
+                await _unitOfWork.SaveAsync();
+                return User.Id;
+            }
+            catch (Exception ex) {throw new Exception(ex.Message); }
 
         }
     }

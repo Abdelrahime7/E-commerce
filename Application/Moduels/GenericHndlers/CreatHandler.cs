@@ -27,9 +27,14 @@ namespace Application.Moduels.GenericHndlers
 
         public async Task<int> Handle(TComande request, CancellationToken cancellationToken)
         {
-            var Entity = _mapper.Map<IEntity>(request);
-            await _repository.AddAsync(Entity);
-            return Entity.Id;
+            try
+            {
+                var Entity = _mapper.Map<IEntity>(request);
+                await _repository.AddAsync(Entity);
+                return Entity.Id;
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+                
         }
     }
 }
