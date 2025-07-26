@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Builder;
+using Serilog;
+
 
 namespace Infrastructure
 {
-    internal class SeriLogConfig
+    public static class SeriLogConfig
     {
+        public static void  LoggConfig(this WebApplicationBuilder builder)
+        {
+            builder.Host.UseSerilog((context, configuration) =>
+            configuration.ReadFrom.Configuration(context.Configuration));
+            
+
+        }
+
+
     }
 }
