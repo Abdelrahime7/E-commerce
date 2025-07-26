@@ -428,3 +428,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# Ignore Serilog log files
+logs/
+*.log
