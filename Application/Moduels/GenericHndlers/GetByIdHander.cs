@@ -2,6 +2,7 @@
 using AutoMapper;
 using Domain.Interface;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 
 namespace Application.Moduels.GenericHndlers
@@ -9,11 +10,18 @@ namespace Application.Moduels.GenericHndlers
     public abstract class GetByIdHander<TQuery, Tdto> : IRequestHandler<TQuery,Tdto>
         where TQuery : IRequest<Tdto>
         
+
     {
+
+        private readonly ILogger<GetByIdHander<TQuery, Tdto>> _logger;
         private readonly IMapper _mapper;
         private readonly  IGenericRepository<IEntity> _repository ;
-        protected GetByIdHander(IMapper mapper,IGenericRepository<IEntity> repository)
+        protected GetByIdHander(IMapper mapper,
+            IGenericRepository<IEntity> repository,
+            ILogger<GetByIdHander<TQuery, Tdto>> logger
+            )
         {
+            _logger = logger;
             _mapper = mapper;
             _repository = repository;
         }
@@ -30,7 +38,9 @@ namespace Application.Moduels.GenericHndlers
 
                 return dto;
             }
-            catch (Exception ex) { throw new Exception(ex.Message); }
+            catch (Exception ex) {
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message); }
         }
     }
 }

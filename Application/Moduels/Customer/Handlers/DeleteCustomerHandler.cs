@@ -1,16 +1,21 @@
 ﻿using Application.Moduels.Customer.Commands;
 using Application.Interfaces.Specific.IunitOW;
 using Application.Moduels.GenericHndlers;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Moduels.Customer.Handlers
 {
   
     public class DeleteCustomerHandler : DeleteHandler<SoftDeleteCustomerCommand>
     {
+        private readonly ILogger<DeleteCustomerHandler> _logger;
+
         private readonly ICustomerUnitOfWork _unitOfWork;
 
-        public DeleteCustomerHandler(ICustomerUnitOfWork unitOfWork)
+        public DeleteCustomerHandler(ICustomerUnitOfWork unitOfWork
+            , ILogger<DeleteCustomerHandler> logger)
         {
+            _logger = logger;
             _unitOfWork = unitOfWork;
         }
 
@@ -28,7 +33,11 @@ namespace Application.Moduels.Customer.Handlers
 
                 }
             }
-            catch (Exception ex) { throw new Exception(ex.Message); }
+            catch (Exception ex) {
+                _logger.LogError( ex.Message); 
+                throw new Exception(ex.Message);
+                
+            }
                    return false;
         }
     }

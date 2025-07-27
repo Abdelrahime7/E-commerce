@@ -6,11 +6,14 @@ using Application.Moduels.GenericHndlers;
 
 
 using Application.Interface;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Moduels.Review.Handlers
 {
-    public class DeleteReviewHandler(IReviewRepository repository) : DeleteHandler<SoftDeleteReviewCommand>
+    public class DeleteReviewHandler(IReviewRepository repository,
+       ILogger<DeleteReviewHandler> logger) : DeleteHandler<SoftDeleteReviewCommand>
     {
+        private readonly ILogger<DeleteReviewHandler>_logger=logger;
         private readonly IReviewRepository _repository = repository;
 
        public override async Task<bool> Handle(SoftDeleteReviewCommand request, CancellationToken cancellationToken)
@@ -18,11 +21,18 @@ namespace Application.Moduels.Review.Handlers
             try
             {
                 var review = await _repository.GetByIDAsync(request.ID);
+                _logger.LogInformation("get review with id : {id} ", request.ID);
                 if (review == null)
+                {
+                    _logger.LogInformation("review with id : {id} not found ", request.ID);
                     return false;
+                }
+
                 return await _repository.SoftDeleteAsync(review.Id) > 0;
             }
-            catch (Exception ex) { throw new Exception(ex.Message); }
+            catch (Exception ex) {
+                _logger.LogInformation("Erorr !! review with {id} not deleted  ", request.ID);
+                throw new Exception(ex.Message); }
           
 
         }

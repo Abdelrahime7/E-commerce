@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Serilog;
 
 namespace Application.Moduels.Common.MiddleWare
 {
@@ -23,6 +24,7 @@ namespace Application.Moduels.Common.MiddleWare
                 }
                 catch (Exception ex)
                 {
+                   
                     context.Response.StatusCode = 500;
                     await context.Response.WriteAsync($"An unexpected error occurred.{ex.Message}");
                 }

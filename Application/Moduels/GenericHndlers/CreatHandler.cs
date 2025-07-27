@@ -2,6 +2,7 @@
 using AutoMapper;
 using Domain.Interface;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 
 namespace Application.Moduels.GenericHndlers
@@ -12,15 +13,18 @@ namespace Application.Moduels.GenericHndlers
         where TComande : IRequest<int>
        
     {
-       
-        
+
+        private readonly ILogger<CreatHandler<TComande>> _logger;
         private readonly IMapper _mapper;
         private readonly IGenericRepository<IEntity> _repository;
 
 
-        public CreatHandler( IMapper mapper, IGenericRepository<IEntity> repository)
+        public CreatHandler( IMapper mapper,
+            IGenericRepository<IEntity> repository,
+              ILogger<CreatHandler<TComande>> logger
+            )
         {
-           
+           _logger= logger;
             _mapper = mapper;
             _repository = repository;
         }
@@ -33,7 +37,9 @@ namespace Application.Moduels.GenericHndlers
                 await _repository.AddAsync(Entity);
                 return Entity.Id;
             }
-            catch (Exception ex) { throw new Exception(ex.Message); }
+            catch (Exception ex) {
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message); }
                 
         }
     }
