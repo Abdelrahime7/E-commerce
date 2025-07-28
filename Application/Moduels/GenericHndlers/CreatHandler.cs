@@ -33,12 +33,14 @@ namespace Application.Moduels.GenericHndlers
         {
             try
             {
-                var Entity = _mapper.Map<IEntity>(request);
+               var Entity = _mapper.Map<IEntity>(request);
                 await _repository.AddAsync(Entity);
+                _logger.LogInformation("Create {Entity} with id :{ID}", typeof(IEntity).Name,Entity.Id);
+
                 return Entity.Id;
             }
             catch (Exception ex) {
-                _logger.LogError(ex.Message);
+                _logger.LogError(ex,"Failed to add {Entity}",typeof(IEntity).Name);
                 throw new Exception(ex.Message); }
                 
         }

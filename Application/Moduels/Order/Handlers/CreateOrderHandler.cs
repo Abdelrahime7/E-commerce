@@ -2,12 +2,10 @@
 using AutoMapper;
 
 
-using Application.Moduels.Customer.Commands;
 using MediatR;
 using Application.Interfaces.Specific.IunitOW;
 using Application.Moduels.Order.Commands;
 using Domain.entities;
-using Application.Moduels.Inventory.Handlers;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Moduels.Order.Handlers
@@ -38,6 +36,8 @@ namespace Application.Moduels.Order.Handlers
 
             try
             {
+                _logger.LogInformation("Starting Order creation for {order}", request.OrderDto);
+
                 await _unitOfWork.OrderRepository.AddAsync(Order);
                 _logger.LogInformation("Order added: {@Order}", Order);
 
@@ -54,7 +54,6 @@ namespace Application.Moduels.Order.Handlers
                 _logger.LogInformation("PurchaseHistory added: {@PurchaseHistory}", PurchaseHistory);
 
                 var Invoices = Order.invoices;
-                _logger.LogInformation("Processing {Count} invoices", Invoices.Count);
 
                 foreach (var invoice in Invoices)
                 {
@@ -63,7 +62,7 @@ namespace Application.Moduels.Order.Handlers
                     Invoice.OrderID = Order.Id;
                     await _unitOfWork.InvoiceRepository.AddAsync(Invoice);
                     _logger.LogInformation("Invoice added: {@Invoice}", Invoice);
-
+                    // need to update inventory 
                     var Inventory = await _unitOfWork.InventoryRepository.GetByIDAsync(Invoice.ItemID);
                     Inventory.ItemQuantity = Invoice.Quantity;
                     await _unitOfWork.InventoryRepository.UpdateAsync(Inventory);
@@ -71,13 +70,13 @@ namespace Application.Moduels.Order.Handlers
                 }
 
                 await _unitOfWork.SaveAsync();
-                _logger.LogInformation("Order with {OderID} saved successfully",Order.Id);
+                _logger.LogInformation("Order   created successfully with Id {Id}", Order.Id);
 
                 return Order.Id;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while processing order");
+                _logger.LogError(ex, "Failed to create Order  {Order}", request.OrderDto);
                 throw new Exception(ex.Message);
             }
 

@@ -24,11 +24,14 @@ namespace Application.Moduels.Review.Handlers
                 _logger.LogInformation("get review with id : {id} ", request.ID);
                 if (review == null)
                 {
-                    _logger.LogInformation("review with id : {id} not found ", request.ID);
+                    _logger.LogWarning("review with id : {id} not found ", request.ID);
                     return false;
                 }
 
-                return await _repository.SoftDeleteAsync(review.Id) > 0;
+                var result= await _repository.SoftDeleteAsync(review.Id) > 0;
+                _logger.LogInformation(" review with id : {id} softDeleted ", request.ID);
+
+                return result;
             }
             catch (Exception ex) {
                 _logger.LogInformation("Erorr !! review with {id} not deleted  ", request.ID);

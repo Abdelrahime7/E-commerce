@@ -41,7 +41,7 @@ namespace Application.Moduels.GenericHndlers
                 if (Entity is null)
                 {
                     _logger.LogWarning("{EntityType} with ID {EntityId} not found.", typeof(IEntity).Name, GetId(request));
-                    throw new Exception($"{typeof(IEntity).Name} not found.");
+                    throw new   NullReferenceException($"{typeof(IEntity).Name} not found.");
                 }
 
                 _mapper.Map(request, Entity);

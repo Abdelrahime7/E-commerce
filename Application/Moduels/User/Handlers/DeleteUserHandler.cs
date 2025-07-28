@@ -19,14 +19,15 @@ namespace Application.Moduels.User.Handlers
                 _logger.LogInformation("try to get User with id :{id}", request.ID);
                 if (user == null)
                 {
-                    _logger.LogInformation(" User with id :{id} not found" , request.ID);
+                    _logger.LogWarning(" User with id :{id} not found" , request.ID);
                     return false;
                 }
                 await _unitOfWork.PersonRepository.SoftDeleteAsync(user.PersonID);
                 await _unitOfWork.UserRepository.SoftDeleteAsync(user.Id);
-                _logger.LogInformation(" User with id :{id} Deleted", request.ID);
 
-                return await _unitOfWork.SaveAsync() > 0;
+                var result= await _unitOfWork.SaveAsync() > 0;
+                _logger.LogInformation(" User with id :{id} Deleted", request.ID);
+                return  result; 
             }
             catch (Exception ex) {
                 _logger.LogInformation(ex ,"Erorr  user not Deleted");

@@ -31,8 +31,12 @@ namespace Application.Moduels.GenericHndlers
         {
             try
             {
-
                 var Entity = await _repository.GetByIDAsync(GetID(request));
+                if (Entity == null)
+                {
+                    _logger.LogWarning("{EntityType} with ID {EntityId} not found.", typeof(IEntity).Name, GetID(request));
+                    throw new NullReferenceException(typeof(IEntity).Name + "Is Null");
+                }
 
                 Tdto dto = _mapper.Map<Tdto>(Entity);
 
@@ -40,7 +44,7 @@ namespace Application.Moduels.GenericHndlers
             }
             catch (Exception ex) {
                 _logger.LogError(ex.Message);
-                throw new Exception(ex.Message); }
+                throw; }
         }
     }
 }

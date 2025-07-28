@@ -29,6 +29,7 @@ namespace Application.Moduels.GenericHndlers
         {
             try
             {
+                
                 var entities = await _repository.GetAllAsync();
 
                 return _mapper.Map<IReadOnlyCollection<Tdto>>(entities);

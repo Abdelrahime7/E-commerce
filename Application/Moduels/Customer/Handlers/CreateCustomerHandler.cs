@@ -1,7 +1,8 @@
-﻿using AutoMapper;
+﻿using Application.Interfaces.Specific.IunitOW;
 using Application.Moduels.Customer.Commands;
+using AutoMapper;
+using Domain.entities;
 using MediatR;
-using Application.Interfaces.Specific.IunitOW;
 using Microsoft.Extensions.Logging;
 namespace Application.Moduels.Customer.Handlers
 {
@@ -33,7 +34,7 @@ namespace Application.Moduels.Customer.Handlers
 
             try
             {
-                
+                _logger.LogInformation("Starting create Customer");
                 await _unitOfWork.PersonRepository.AddAsync(person);
 
                 customer.Person = person;
@@ -42,10 +43,12 @@ namespace Application.Moduels.Customer.Handlers
                 await _unitOfWork.CustomerRepository.AddAsync(customer);
 
                 await _unitOfWork.SaveAsync();
+                _logger.LogInformation("Customer  created successfully with Id {Id}", customer.Id);
+
                 return customer.Id;
             }
             catch (Exception ex) {
-                _logger.LogError(ex.Message);
+                _logger.LogError(ex,"Erorr ,Customer not Added");
                 throw new Exception(ex.Message); }
         }
     }

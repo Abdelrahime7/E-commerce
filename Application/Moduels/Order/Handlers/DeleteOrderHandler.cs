@@ -6,6 +6,7 @@ using Application.Moduels.GenericHndlers;
 using Application.Interfaces.Specific.IunitOW;
 using Microsoft.Extensions.Logging;
 using Domain.entities;
+using Microsoft.AspNetCore.Http;
 
 
 namespace Application.Moduels.Order.Handlers
@@ -21,11 +22,13 @@ namespace Application.Moduels.Order.Handlers
         {
             try
             {
+                _logger.LogInformation("Attempting to soft delete Order with ID {Id}", request.ID);
+
                 var order = await _unitOfWork.OrderRepository.GetByIDAsync(request.ID);
                 _logger.LogInformation("Get Order with id = {ID}", request.ID);
                 if (order == null)
                 {
-                    _logger.LogInformation("Order with id = {ID} not found", request.ID);
+                    _logger.LogWarning("Order with id = {ID} not found", request.ID);
                     return false;
                 }
 
@@ -39,18 +42,20 @@ namespace Application.Moduels.Order.Handlers
               
 
                 await _unitOfWork.PurchaseRepository.SoftDeleteAsync(order.PurchaseHistory.Id);
-                _logger.LogInformation("Delete  purchase  within this order");
+                _logger.LogInformation("SoftDelete  purchase  within this order");
 
                 await _unitOfWork.SaleRepository.SoftDeleteAsync(order.Sale.Id);
-                _logger.LogInformation("Delete  Sale  within this order");
+                _logger.LogInformation("SoftDelete  Sale  within this order");
 
 
                 await _unitOfWork.OrderRepository.SoftDeleteAsync(order.Id);
-                _logger.LogInformation("Delete  ORder with {orderID}",order.Id);
+                _logger.LogInformation("SoftDelete  ORder with {orderID}",order.Id);
 
 
-                return await _unitOfWork.SaveAsync() > 0;
-               
+                 var results= await _unitOfWork.SaveAsync() > 0;
+                _logger.LogInformation("Soft delete completed for order ID {Id}", order.Id);
+
+                return results;
 
             }
             catch (Exception ex) {

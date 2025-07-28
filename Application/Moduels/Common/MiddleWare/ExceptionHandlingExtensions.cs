@@ -16,6 +16,7 @@ namespace Application.Moduels.Common.MiddleWare
                 }
                 catch (FluentValidation.ValidationException ex)
                 {
+                    Log.Warning(ex, "Validation failed for request");
                     context.Response.StatusCode = 400;
                     var errors = ex.Errors
                         .Select(e => new { e.PropertyName, e.ErrorMessage });
@@ -24,7 +25,7 @@ namespace Application.Moduels.Common.MiddleWare
                 }
                 catch (Exception ex)
                 {
-                   
+                    Log.Error(ex, "Unhandled exception occurred");
                     context.Response.StatusCode = 500;
                     await context.Response.WriteAsync($"An unexpected error occurred.{ex.Message}");
                 }
