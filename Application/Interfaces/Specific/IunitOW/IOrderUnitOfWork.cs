@@ -9,6 +9,5 @@ namespace Application.Interfaces.Specific.IunitOW
         IInvoiceRepository InvoiceRepository { get; }
         IPurchaseRepository PurchaseRepository { get; }
         ISaleRepository SaleRepository { get; }
-        IInventoryRepository InventoryRepository { get; }
     }
 }

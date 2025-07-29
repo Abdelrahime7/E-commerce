@@ -7,7 +7,7 @@ namespace Infrastructure.Repository.GenericRepo
 {
     public class OrderUnitOfWork(IOrderRepository orderRepository, IInvoiceRepository invoiceRepository,
         IPurchaseRepository purchaseRepository, ISaleRepository saleRepository
-        ,IInventoryRepository inventoryRepository,AppDbContext appDbContext ) : IOrderUnitOfWork
+        ,AppDbContext appDbContext ) : IOrderUnitOfWork
     {
 
         private readonly AppDbContext _appDbContext = appDbContext;
@@ -19,7 +19,6 @@ namespace Infrastructure.Repository.GenericRepo
 
         public ISaleRepository SaleRepository => saleRepository;
 
-        public IInventoryRepository InventoryRepository => inventoryRepository;
 
         public void Dispose() => _appDbContext.Dispose();
 

@@ -27,7 +27,8 @@ namespace Application.Moduels.Order.Handlers
         }
 
         public async Task<int> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
-        {
+        { 
+           
 
             var Order = _mapper.Map<Domain.entities.Order>(request);
             var Sale = _mapper.Map<Domain.entities.Sale>(request);
@@ -50,6 +51,7 @@ namespace Application.Moduels.Order.Handlers
                 PurchaseHistory.OrderId = Order.Id;
                 PurchaseHistory.Customer = Order.Customer;
                 PurchaseHistory.CustomerId = Order.CustomerId;
+
                 await _unitOfWork.PurchaseRepository.AddAsync(PurchaseHistory);
                 _logger.LogInformation("PurchaseHistory added: {@PurchaseHistory}", PurchaseHistory);
 
@@ -62,11 +64,7 @@ namespace Application.Moduels.Order.Handlers
                     Invoice.OrderID = Order.Id;
                     await _unitOfWork.InvoiceRepository.AddAsync(Invoice);
                     _logger.LogInformation("Invoice added: {@Invoice}", Invoice);
-                    // need to update inventory 
-                    var Inventory = await _unitOfWork.InventoryRepository.GetByIDAsync(Invoice.ItemID);
-                    Inventory.ItemQuantity = Invoice.Quantity;
-                    await _unitOfWork.InventoryRepository.UpdateAsync(Inventory);
-                    _logger.LogInformation("Inventory updated for ItemID {ItemID}: {@Inventory}", Invoice.ItemID, Inventory);
+                   
                 }
 
                 await _unitOfWork.SaveAsync();
