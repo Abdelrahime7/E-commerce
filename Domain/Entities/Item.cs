@@ -13,7 +13,7 @@ public class Item:IEntity,ISoftDelete
     public DateTime ExpireDate { get; set; }
     public DateTime ProdDate { get; set; }
     public UnitTypes UnitType { get; set; }
-
+    public decimal TaxRate { get; set; }
     public  Inventory Inventory {  get; set; }
     public ItemGallery  ItemGallery { get; set; }
     public bool IsDeleted { get; set; }
