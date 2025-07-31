@@ -1,4 +1,10 @@
 {
-  "Constr": "Server=. ; DataBase=StoreDB ; Integrated Security=SSPI;TrustServerCertificate=true"
+  "Constr": "Server=. ; DataBase=StoreDB ; Integrated Security=SSPI;TrustServerCertificate=true",
+
+
+  "Stripe": {
+    "SecretKey": "sk_test_...",
+    "PublishableKey": "pk_test_..."
+  }
 
 }

@@ -1,11 +1,18 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Moduels.Common.MiddleWare
 {
     public static class ExceptionHandlingExtensions
     {
+        private static ILogger? _logger;
+
+        public static void ConfigureLogger(ILoggerFactory loggerFactory)
+        {
+            _logger = loggerFactory.CreateLogger("GlobalExceptionHandler");
+        }
+
         public static IApplicationBuilder UseGlobalExceptionHandling(this IApplicationBuilder app)
         {
             return app.Use(async (context, next) =>
@@ -16,7 +23,7 @@ namespace Application.Moduels.Common.MiddleWare
                 }
                 catch (FluentValidation.ValidationException ex)
                 {
-                    Log.Warning(ex, "Validation failed for request");
+                    _logger?.LogWarning(ex, "Validation failed for request");
                     context.Response.StatusCode = 400;
                     var errors = ex.Errors
                         .Select(e => new { e.PropertyName, e.ErrorMessage });
@@ -25,12 +32,17 @@ namespace Application.Moduels.Common.MiddleWare
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "Unhandled exception occurred");
+                    _logger?.LogError(ex, "Unhandled exception occurred");
                     context.Response.StatusCode = 500;
-                    await context.Response.WriteAsync($"An unexpected error occurred.{ex.Message}");
+                    await context.Response.WriteAsJsonAsync(new
+                    {
+                        Error = "An unexpected error occurred.",
+                        Details = ex.Message
+                    });
                 }
             });
         }
     }
+
 
 }

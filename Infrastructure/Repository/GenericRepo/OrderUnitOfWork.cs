@@ -19,6 +19,7 @@ namespace Infrastructure.Repository.GenericRepo
 
         public ISaleRepository SaleRepository => saleRepository;
 
+        public IInventoryRepository InventoryRepository => throw new NotImplementedException();
 
         public void Dispose() => _appDbContext.Dispose();
 

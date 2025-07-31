@@ -3,7 +3,6 @@ using Application.Interfaces.Iservices;
 using Domain.entities;
 using Domain.Enums;
 using Microsoft.Extensions.Logging;
-using Serilog.Core;
 
 namespace Application.Services.PricingService
 {
@@ -91,7 +90,6 @@ namespace Application.Services.PricingService
             var netPrice = basePrice - discount;
             var tax = CalculateTax(item, netPrice);
             var finalPrice = netPrice + tax;
-
             _logger.LogDebug("BasePrice: {BasePrice}, Discount: {Discount}, NetPrice: {NetPrice}, Tax: {Tax}, FinalPrice: {FinalPrice}",
                basePrice, discount, netPrice, tax, finalPrice);
 
