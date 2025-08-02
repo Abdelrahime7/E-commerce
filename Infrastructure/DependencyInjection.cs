@@ -1,9 +1,11 @@
 using Application.Interface;
 using Application.Interfaces.Generic;
+using Application.Interfaces.Iservices;
 using Application.Interfaces.Specific.IunitOW;
 using Infrastructure.ADbContext;
 using Infrastructure.Repository.GenericRepo;
 using Infrastructure.Repository.specific_Repo;
+using Infrastructure.Services.PyamentService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,6 +41,8 @@ public static class DependencyInjection
         services.AddScoped<IOrderUnitOfWork, OrderUnitOfWork>();
         services.AddScoped<IUserUnitOfWork, UserUnitOfWork>();
 
+        // strip 
+        services.AddScoped<IPaymentService, StripePaymentService>();
 
 
         return services;
