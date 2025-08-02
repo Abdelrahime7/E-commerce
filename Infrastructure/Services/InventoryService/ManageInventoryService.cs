@@ -1,10 +1,9 @@
-﻿using Application.Interface;
+﻿using Application.Interface; 
 using Application.Interfaces.Iservices;
-using Domain.entities;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 
-namespace Application.Services.InventoryService
+namespace Infrastructure.Services.InventoryService
 {
 
     public class ManageInventoryService : IInventoryService

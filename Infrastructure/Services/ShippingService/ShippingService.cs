@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces.Iservices;
 using Domain.entities;
 
-namespace Application.Services.ShippingService
+namespace Infrastructure.Services.ShippingService
 {
     public class ShippingService : IShippingService
     {

@@ -2,7 +2,7 @@
 using Application.Interfaces.Iservices;
 
 
-namespace Application.Services.OrderService
+namespace Infrastructure.Services.OrderService
 {
      
     public class PlaceOrderService : IIorderService

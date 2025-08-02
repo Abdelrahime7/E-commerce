@@ -4,7 +4,7 @@ using Domain.entities;
 using Domain.Enums;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Services.PricingService
+namespace Infrastructure.Services.PricingService
 {
     public class PricingService : IPricingService
     {
