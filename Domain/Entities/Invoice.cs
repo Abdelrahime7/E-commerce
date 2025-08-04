@@ -12,6 +12,7 @@ public class Invoice :IEntity,ISoftDelete
     public int OrderID { get; set; }
     public int ItemID { get; set; }
 
+    public decimal Total { get; set; }
     public  Item Item  { get; set; }
 
     public   Order Order { get; set; }

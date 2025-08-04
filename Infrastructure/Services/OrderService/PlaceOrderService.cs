@@ -1,15 +1,16 @@
 ﻿using Application.DTOs.Order;
 using Application.Interfaces.Iservices;
+using Domain.entities;
 
 
 namespace Infrastructure.Services.OrderService
 {
      
-    public class PlaceOrderService : IIorderService
+    public class PlaceOrderService : IOrderService
     {
         
 
-        public Task<Guid> PlaceOrderAsync(OrderDto dto)
+        public Task<Order> PlaceOrderAsync(OrderDto dto)
         {
            
            

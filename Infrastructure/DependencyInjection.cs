@@ -5,7 +5,12 @@ using Application.Interfaces.Specific.IunitOW;
 using Infrastructure.ADbContext;
 using Infrastructure.Repository.GenericRepo;
 using Infrastructure.Repository.specific_Repo;
+using Infrastructure.Services.CartService;
+using Infrastructure.Services.InventoryService;
+using Infrastructure.Services.OrderService;
+using Infrastructure.Services.PricingService;
 using Infrastructure.Services.PyamentService;
+using Infrastructure.Services.ShippingService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,14 +40,28 @@ public static class DependencyInjection
         services.AddScoped<ISaleRepository, SaleRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         
-
+// UOW 
         services.AddScoped<ICustomerUnitOfWork, CustomerUnitOFwork>();
         services.AddScoped<IItemUnitOfWork, ItemUnitOFwork>();
         services.AddScoped<IOrderUnitOfWork, OrderUnitOfWork>();
         services.AddScoped<IUserUnitOfWork, UserUnitOfWork>();
 
-        // strip 
+        //Iservices
+        services.AddScoped<ICartService, CartService>();
+        services.AddScoped<IOrderService, PlaceOrderService>();
+        services.AddScoped<IPricingService, PricingService>();
         services.AddScoped<IPaymentService, StripePaymentService>();
+        services.AddScoped<ICODService, CODPaymentService>();
+        services.AddScoped<IShippingService, ShippingService>();
+        services.AddScoped<IInventoryService, ManageInventoryService>();
+
+
+
+
+
+
+
+
 
 
         return services;
