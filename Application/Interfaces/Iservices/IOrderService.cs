@@ -7,7 +7,8 @@ namespace Application.Interfaces.Iservices
 {
     public interface IOrderService
     {
-        Task<Order> PlaceOrderAsync(OrderDto dto);
+        Task PlaceOrderAsync(OrderDto dto);
+        Task<OrderDto> GetOrderByID(int ID);
     }
 
 }

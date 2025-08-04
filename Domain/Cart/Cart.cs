@@ -9,6 +9,7 @@ namespace Domain.Cart
         public Guid Id { get; set; }
         public ICollection<ItemDetaills> itemDetaills { get; set; }
         public ClientInfo clientInfo { get; set; }
+       
         public DateTime Date { get; set; }
 
     }
