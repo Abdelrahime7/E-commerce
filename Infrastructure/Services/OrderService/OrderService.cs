@@ -2,7 +2,6 @@
 using Application.Interfaces.Iservices;
 using Application.Moduels.Order.Commands;
 using  MediatR;
-using System.Net.Http.Headers;
 using static Application.Moduels.Order.Queries.Queries;
 
 
@@ -27,7 +26,7 @@ namespace Infrastructure.Services.OrderService
             =>await _mediator.Send( new GetOrderByIdQuery(ID));
 
         public async Task PlaceOrderAsync(OrderDto dto)   
-          => await _mediator.Send(dto);
+          => await _mediator.Send( new CreateOrderCommand(dto));
             
         public async Task<bool> SoftDeleteOrderAsync(int ID)
             => await _mediator.Send( new SoftDeleteOrderCommand(ID));
