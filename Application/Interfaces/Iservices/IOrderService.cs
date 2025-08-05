@@ -8,7 +8,10 @@ namespace Application.Interfaces.Iservices
     public interface IOrderService
     {
         Task PlaceOrderAsync(OrderDto dto);
-        Task<OrderDto> GetOrderByID(int ID);
+        Task<OrderDto> GetOrderByIDAsync(int ID);
+        Task<OrderDto> UpdateOrderAsync(OrderResponse response);
+        Task<bool> SoftDeleteOrderAsync(int ID);
+        Task<IEnumerable<OrderDto>> GetAllOrdersAsync();
     }
 
 }
