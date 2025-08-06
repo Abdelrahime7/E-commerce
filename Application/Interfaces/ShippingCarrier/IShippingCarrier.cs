@@ -1,4 +1,4 @@
-﻿using Domain.Services.ShippingService;
+﻿using Domain.Shipping.ShippingService;
 
 
 namespace Application.Interfaces.ShippingCarrier

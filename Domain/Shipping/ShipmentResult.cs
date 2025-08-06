@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Domain.Services.ShippingService
+namespace Domain.Shipping.ShippingService
 {
     public class ShipmentResult
     {

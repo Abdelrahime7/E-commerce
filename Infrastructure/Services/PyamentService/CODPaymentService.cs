@@ -4,9 +4,7 @@ using AutoMapper;
 using Domain.Cart;
 using Domain.entities;
 using Domain.Enums;
-using Microsoft.AspNetCore.Components.Forms.Mapping;
-using System.Reflection.Metadata.Ecma335;
-using System.Threading.Tasks;
+
 
 namespace Infrastructure.Services.PyamentService
 {
@@ -23,7 +21,7 @@ namespace Infrastructure.Services.PyamentService
 
         public async Task<bool> ConfirmAsync(int ID)
         {
-            OrderDto orderDto = await _orderService.GetOrderByID(ID);
+            OrderDto orderDto = await _orderService.GetOrderByIDAsync(ID);
      Order order= _mapper.Map<Order>(orderDto);
             if (order != null)
             {

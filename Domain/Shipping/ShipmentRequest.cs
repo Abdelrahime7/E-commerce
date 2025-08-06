@@ -1,7 +1,7 @@
 ﻿using Domain.entities;
 using System.Collections.Generic;
 
-namespace Domain.Services.ShippingService
+namespace Domain.Shipping.ShippingService
 {
     public class ShipmentRequest
     {

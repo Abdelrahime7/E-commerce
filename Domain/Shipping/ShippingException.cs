@@ -1,8 +1,10 @@
 ﻿
-namespace Infrastructure.Services.ShippingService
+using System;
+
+namespace Domain.Shipping.ShippingService
 {
     [Serializable]
-    internal class ShippingException : Exception
+    public class ShippingException : Exception
     {
         public ShippingException()
         {

@@ -1,10 +1,7 @@
-﻿using Application.Interface;
-using Application.Interfaces.Iservices;
+﻿using Application.Interfaces.Iservices;
 using Application.Interfaces.ShippingCarrier;
-using Domain.Services.ShippingService;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using Stripe;
+using Domain.Shipping.ShippingService;
+
 
 namespace Infrastructure.Services.ShippingService
 {
