@@ -1,5 +1,7 @@
 ﻿using Application.Interface; 
 using Application.Interfaces.Iservices;
+using Domain.entities;
+using Domain.Enums;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 
@@ -53,6 +55,16 @@ namespace Infrastructure.Services.InventoryService
             await _repository.UpdateAsync(item);
             _logger.LogInformation("Updated inventory for Item {ItemId}. Remaining quantity: {Remaining}", ItemId, item.ItemQuantity);
 
+        }
+
+        public async Task UpdateInventory(int ItemId, int quantity, EnOperation operation)
+        {
+            var Repo = await _repository.GetByIDAsync(ItemId);
+           Repo.ItemQuantity = operation == EnOperation.Increase?  
+            Repo.ItemQuantity += quantity : Repo.ItemQuantity -= quantity;
+
+           await _repository.UpdateAsync(Repo);
+            
         }
     }
 }
