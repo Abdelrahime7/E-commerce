@@ -50,10 +50,8 @@ namespace Infrastructure.Services.InventoryService
             _reservedStock.AddOrUpdate(ItemId, quantity, (key, existing) => existing + quantity);
             _logger.LogInformation("Reserved {Quantity} units of Item {ItemId}", quantity, ItemId);
 
-            var item = await _repository.GetByItemIDaAsync(ItemId);
-            item.ItemQuantity -= quantity;
-            await _repository.UpdateAsync(item);
-            _logger.LogInformation("Updated inventory for Item {ItemId}. Remaining quantity: {Remaining}", ItemId, item.ItemQuantity);
+          await UpdateInventory(ItemId, quantity, EnOperation.Decrease);
+            _logger.LogInformation("Updated inventory for Item {ItemId}. Remaining quantity: {Remaining}", ItemId, quantity);
 
         }
 
