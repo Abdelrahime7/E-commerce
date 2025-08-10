@@ -8,14 +8,18 @@ namespace Infrastructure.Services.CartService
     {
         private readonly ILogger<CartService> _logger;
         private readonly Cart _cart;
+        public Cart cart => _cart;
 
-        public CartService(ILogger<CartService> logger, Cart cart)
+       
+            
+
+
+        public CartService(ILogger<CartService> logger)
         {
             _logger = logger;
-            _cart = cart;
+            _cart = new Cart();
         }
 
-        public Cart cart => _cart;
 
         public void AddItem(ItemDetaills itemDetaills)
         {
