@@ -6,8 +6,8 @@ namespace Application.Moduels.Customer.Commands
 {
   
  
-   public record CreateCustomerCommand(CustomerDto customerDto) : IRequest<int>;
-   public record UpdateCustomerCommand(CustomerResponse Response) : IRequest<CustomerDto>;
+   public record CreateCustomerCommand(CustomerRequest customer) : IRequest<int>;
+   public record UpdateCustomerCommand(CustomerRequest Request) : IRequest<CustomerDto>;
     
     public record DeleteCustomerCommand(int ID) : IRequest<bool>;
 

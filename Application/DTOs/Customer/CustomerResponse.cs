@@ -1,6 +1,6 @@
 ﻿namespace Application.DTOs.Customer
 {
-    public record CustomerResponse
+    public record CustomerRequest
     {
         public int ID;
         public int Point { get; set; }

@@ -11,7 +11,7 @@ namespace Application.Moduels.Order.Validators
         {
             RuleFor(C => C.OrderDto.Status).NotEmpty().WithMessage("Order Status is required");
             RuleFor(C => C.OrderDto.Total).NotEmpty().WithMessage("Total is required");
-            RuleFor(C => C.OrderDto.CustomerId).NotEmpty().WithMessage("Customer Id is required");
+            RuleFor(C => C.OrderDto.Customer).NotEmpty().WithMessage("Customer Id is required");
          
         }
 

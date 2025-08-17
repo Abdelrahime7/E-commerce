@@ -12,10 +12,10 @@ namespace Application.Moduels.Customer.Validators
         {
 
 
-            RuleFor(C => C.customerDto.FName).NotEmpty().WithMessage("first name is required");
-            RuleFor(C => C.customerDto.LName).NotEmpty().WithMessage("last name is required");
-            RuleFor(C => C.customerDto.Phone).NotEmpty().WithMessage("phone is required");
-            RuleFor(C => C.customerDto.Email).NotEmpty().WithMessage("Email is required").
+            RuleFor(C => C.customer.FName).NotEmpty().WithMessage("first name is required");
+            RuleFor(C => C.customer.LName).NotEmpty().WithMessage("last name is required");
+            RuleFor(C => C.customer.Phone).NotEmpty().WithMessage("phone is required");
+            RuleFor(C => C.customer.Email).NotEmpty().WithMessage("Email is required").
                 EmailAddress().WithMessage("wrong Email format");
 
         }

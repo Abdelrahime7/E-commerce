@@ -16,7 +16,7 @@ namespace Application.Moduels.Customer.Handlers
         {
         }
 
-        protected override int GetId(UpdateCustomerCommand command) => command.Response.ID;
+        protected override int GetId(UpdateCustomerCommand command) => command.Request.ID;
        
     }
 
