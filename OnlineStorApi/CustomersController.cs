@@ -12,11 +12,11 @@ namespace OnlineStorApi
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly Mediator _mediator;
+        private readonly ISender _sender;
 
-        public CustomersController(Mediator mediator)
+        public CustomersController(ISender sender)
         {
-            _mediator = mediator;
+            _sender = sender;
         }
 
       
@@ -27,7 +27,7 @@ namespace OnlineStorApi
             [ProducesResponseType(StatusCodes.Status204NoContent)]
             public async  Task<ActionResult<IEnumerable<CustomerDto>>> GetAllCustomersAysnc()
             {
-                var customers = await _mediator.Send(new GetAllCustomersQuery());
+                var customers = await _sender.Send(new GetAllCustomersQuery());
 
                 if (customers.Count != 0)
                 {
@@ -49,7 +49,7 @@ namespace OnlineStorApi
             {
                 return BadRequest($"Invalid id = {id}");
             }
-            var Customer =await _mediator.Send(new GetCustomerByIdQuery(id));
+            var Customer =await _sender.Send(new GetCustomerByIdQuery(id));
             if (Customer != null)
             {
                 return Ok(Customer);
@@ -64,7 +64,7 @@ namespace OnlineStorApi
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task <ActionResult<int>> CreateCustomer([FromBody]CustomerRequest customer)
         {
-            await _mediator.Send(new CreateCustomerCommand(customer));
+            await _sender.Send(new CreateCustomerCommand(customer));
             if (customer.ID > 0)
             {
                 return CreatedAtRoute($"GetCusomerByIDAsync", new { Id = customer.ID }, customer);
@@ -81,7 +81,7 @@ namespace OnlineStorApi
 
             if (customer.ID > 0)
             {
-               var Customer= await _mediator.Send(new UpdateCustomerCommand(customer));
+               var Customer= await _sender.Send(new UpdateCustomerCommand(customer));
                 if (Customer != null) {
                     return Ok(Customer); }
 
@@ -100,7 +100,7 @@ namespace OnlineStorApi
             {
                 return NoContent();
             }
-            if (await _mediator.Send(new DeleteCustomerCommand(id)))
+            if (await _sender.Send(new DeleteCustomerCommand(id)))
             {
                 return Ok("Customer Deleted successfully ");
             }
