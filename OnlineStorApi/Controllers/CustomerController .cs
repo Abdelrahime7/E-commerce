@@ -1,42 +1,110 @@
-﻿using Application.DTOs;
-using Application.Interface;
+﻿using Application.DTOs.Customer;
 using Application.Moduels.Customer.Commands;
-using Domain.entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using static Application.Moduels.Customer.Queries.Queries;
 namespace OnlineStorApi.Controllers
 {
-    [Route("api/Customers")]
+    [Route("api/Customer")]
     [ApiController]
-    public class CustomerContoller : ControllerBase
+    public class CustomersController : ControllerBase
     {
         private readonly ISender _sender;
-        public CustomerContoller(ISender sender)
+
+        public CustomersController(ISender sender)
         {
             _sender = sender;
         }
 
 
 
-        [HttpPost(Name = "AddCustomer")]
+
+        [HttpGet(Name = "GetAllCustomersAysnc")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<ActionResult<IEnumerable<CustomerDto>>> GetAllCustomersAysnc()
+        {
+            var customers = await _sender.Send(new GetAllCustomersQuery());
+
+            if (customers.Count != 0)
+            {
+                return Ok(customers);
+            }
+
+            return NoContent();
+        }
+
+
+        [HttpGet("{ID}", Name = "GetCusomerByID")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+        public async Task<ActionResult<CustomerDto>> GetCusomerByIDAsync(int id)
+        {
+            if (id < 1)
+            {
+                return BadRequest($"Invalid id = {id}");
+            }
+            var Customer = await _sender.Send(new GetCustomerByIdQuery(id));
+            if (Customer != null)
+            {
+                return Ok(Customer);
+            }
+            return NotFound();
+        }
+
+
+
+        [HttpPost(Name = "CreatCustomer")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task< ActionResult< int>> AddCustomer(CreateCustomerCommand command)
+        public async Task<ActionResult<int>> CreateCustomer([FromBody] CustomerRequest customer)
         {
-            if (command !=null)
+            await _sender.Send(new CreateCustomerCommand(customer));
+            if (customer.ID > 0)
             {
-                var ID = await _sender.Send(command);
-                return CreatedAtRoute($"GetCustomerByID", new { Id = ID }, command);
+                return CreatedAtRoute($"GetCusomerByIDAsync", new { Id = customer.ID }, customer);
             }
-            return BadRequest("Input data is null or invalid.");
+            return BadRequest("Customer creation failed.");
+        }
+
+
+        [HttpPut(Name = "UpdateCustomer")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<CustomerDto>> Put([FromBody] CustomerRequest customer)
+        {
+
+            if (customer.ID > 0)
+            {
+                var Customer = await _sender.Send(new UpdateCustomerCommand(customer));
+                if (Customer != null)
+                {
+                    return Ok(Customer);
+                }
+
+                return NotFound("Customer not found.");
+            }
+            return BadRequest(("Customer Updation failed."));
 
 
         }
 
 
+        [HttpDelete("{id}", Name = "DeleteCustomer")]
+        public async Task<ActionResult<bool>> Delete(int id)
+        {
+            if (id < 1)
+            {
+                return NoContent();
+            }
+            if (await _sender.Send(new DeleteCustomerCommand(id)))
+            {
+                return Ok("Customer Deleted successfully ");
+            }
 
-
-
-
+            return BadRequest("Customer not deleted");
+        }
     }
 }
