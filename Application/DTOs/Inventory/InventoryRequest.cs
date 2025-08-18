@@ -1,6 +1,7 @@
 ﻿namespace Application.DTOs.Inventory
 {
-    public record InventoryResponse
+    public record InventoryRequest
+
     {
       public  int Id { get; set; }
        public int InventoryDevision {  get; set; }

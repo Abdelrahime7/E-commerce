@@ -1,10 +1,7 @@
 ﻿
 using Application.Interfaces.Generic;
-using Application.Interfaces.Specific.IunitOW;
 using Application.Moduels.GenericHndlers;
 using Application.Moduels.Inventory.Commands;
-using Application.Moduels.Item.Commands;
-using Application.Moduels.User.Commands;
 using AutoMapper;
 using Domain.Interface;
 using Microsoft.Extensions.Logging;

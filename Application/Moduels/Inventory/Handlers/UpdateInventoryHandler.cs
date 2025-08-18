@@ -16,7 +16,7 @@ namespace Application.Moduels.Inventory.Handlers
         {
         }
 
-        protected override int GetId(UpdateInventoryCommand command) => command.Response.Id;
+        protected override int GetId(UpdateInventoryCommand command) => command.Request.Id;
        
     }
 
