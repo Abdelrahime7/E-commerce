@@ -2,7 +2,7 @@
 
 namespace Application.DTOs.ItemGallery
 {
-    public record ItemGalleryResponse
+    public record ItemGalleryRequest
     {
         public int Id { get; set; }
         public int ItemID { get; set; }
