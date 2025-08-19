@@ -9,7 +9,7 @@ namespace Application.Interfaces.Iservices
     {
         Task PlaceOrderAsync(OrderDto dto);
         Task<OrderDto> GetOrderByIDAsync(int ID);
-        Task<OrderDto> UpdateOrderAsync(OrderResponse response);
+        Task<OrderDto> UpdateOrderAsync(OrderRequest response);
         Task<bool> SoftDeleteOrderAsync(int ID);
         Task<IEnumerable<OrderDto>> GetAllOrdersAsync();
     }

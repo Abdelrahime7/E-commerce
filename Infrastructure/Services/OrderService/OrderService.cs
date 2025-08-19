@@ -33,7 +33,7 @@ namespace Infrastructure.Services.OrderService
             => await _mediator.Send( new SoftDeleteOrderCommand(ID));
      
 
-        public async Task<OrderDto> UpdateOrderAsync(OrderResponse response)
+        public async Task<OrderDto> UpdateOrderAsync(OrderRequest response)
            => await _mediator.Send(new UpdateOrderCommand(response));
 
            

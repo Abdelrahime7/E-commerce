@@ -4,7 +4,7 @@ using Domain.Enums;
 namespace Application.DTOs.Order
 
 {
-    public record OrderResponse
+    public record OrderRequest
     {
         public int Id { get; set; }
         public OrderStatus Status { get; set; }
