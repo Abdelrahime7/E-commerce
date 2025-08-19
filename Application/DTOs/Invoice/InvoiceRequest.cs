@@ -1,6 +1,6 @@
 ﻿namespace Application.DTOs.Invoice
 {
-    public record InvoiceResponse
+    public record InvoiceRequest
     {
      public int Id { get; set; }
     public    short Quantity { get; set; } 

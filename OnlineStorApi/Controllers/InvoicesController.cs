@@ -1,6 +1,8 @@
-﻿using Application.Moduels.Invoice.Commands;
+﻿using Application.DTOs.Invoice;
+using Application.Moduels.Invoice.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using static Application.Moduels.Invoice.Queries.Queries;
 
 
 namespace OnlineStorApi.Controller
@@ -17,19 +19,93 @@ namespace OnlineStorApi.Controller
 
 
 
-        [HttpPost(Name = "AddInvoice")]
+
+        [HttpGet(Name = "GetAllInvoicesAysnc")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<ActionResult<IEnumerable<InvoiceDto>>> GetAllInvoicesAysnc()
+        {
+            var Invoices = await _sender.Send(new GetAllInvoicesQuery());
+
+            if (Invoices.Count != 0)
+            {
+                return Ok(Invoices);
+            }
+
+            return NoContent();
+        }
+
+
+        [HttpGet("{ID}", Name = "GetInvoiceByID")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+        public async Task<ActionResult<InvoiceDto>> GetInvoiceByIDAsync(int id)
+        {
+            if (id < 1)
+            {
+                return BadRequest($"Invalid id = {id}");
+            }
+            var Invoice = await _sender.Send(new GetInvoiceByIdQuery(id));
+            if (Invoice != null)
+            {
+                return Ok(Invoice);
+            }
+            return NotFound();
+        }
+
+
+
+        [HttpPost(Name = "CreatInvoice")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<int>> AddInvoice(CreateInvoiceCommand command)
+        public async Task<ActionResult<int>> CreateInvoiceAsync([FromBody] InvoiceRequest request)
         {
-            if (command != null)
+            await _sender.Send(new CreateInvoiceCommand(request));
+            if (request.Id > 0)
             {
-                var ID = await _sender.Send(command);
-                return CreatedAtRoute($"GetInvoiceByID", new { Id = ID }, command);
+                return CreatedAtRoute($"GetInvoiceByIDAsync", new { Id = request.Id }, request);
             }
-            return BadRequest("Input data is null or invalid.");
+            return BadRequest("Invoice creation failed.");
+        }
 
 
+        [HttpPut(Name = "UpdateInvoice")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<InvoiceDto>> UpdateInvoiceAsync([FromBody] InvoiceRequest request)
+        {
+
+            if (request.Id> 0)
+            {
+                var Invoice = await _sender.Send(new UpdateInvoiceCommand(request));
+                if (Invoice != null)
+                {
+                    return Ok(Invoice);
+                }
+
+                return NotFound("Invoice not found.");
+            }
+            return BadRequest(("Invoice Updation failed."));
+
+
+        }
+
+
+        [HttpDelete("{id}", Name = "DeleteInvoice")]
+        public async Task<ActionResult<bool>> DeleteInvoiceAsync(int id)
+        {
+            if (id < 1)
+            {
+                return NoContent();
+            }
+            if (await _sender.Send(new DeleteInvoiceCommand(id)))
+            {
+                return Ok("Invoice Deleted successfully ");
+            }
+
+            return BadRequest("Invoice not deleted");
         }
 
 
