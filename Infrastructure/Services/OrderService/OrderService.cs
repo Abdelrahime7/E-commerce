@@ -26,7 +26,7 @@ namespace Infrastructure.Services.OrderService
         public async Task<OrderDto> GetOrderByIDAsync(int ID)
             =>await _mediator.Send( new GetOrderByIdQuery(ID));
 
-        public async Task PlaceOrderAsync(OrderDto dto)   
+        public async Task<int> PlaceOrderAsync(OrderDto dto)   
           => await _mediator.Send( new CreateOrderCommand(dto));
             
         public async Task<bool> SoftDeleteOrderAsync(int ID)

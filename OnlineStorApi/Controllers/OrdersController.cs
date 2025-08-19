@@ -1,6 +1,10 @@
-﻿using Application.Moduels.Order.Commands;
+﻿using Application.DTOs.Order;
+using Application.Interfaces.Iservices;
+using Application.Moduels.Order.Commands;
+using Application.Moduels.Order.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using static Application.Moduels.Order.Queries.Queries;
 
 namespace OnlineStorApi.Controller
 {
@@ -8,28 +12,107 @@ namespace OnlineStorApi.Controller
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly ISender _sender;
-        public OrdersController(ISender sender)
+        private readonly IOrderService _service;
+        public OrdersController(IOrderService service)
         {
-            _sender = sender;
+            _service = service;
         }
 
 
 
-        [HttpPost(Name = "AddOrder")]
+
+        [HttpGet(Name = "GetAllOrdersAysnc")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<ActionResult<IEnumerable<OrderDto>>> GetAllOrdersAysnc()
+        {
+            var Orders = await _service.GetAllOrdersAsync();
+
+            if (Orders.Any())
+            {
+                return Ok(Orders);
+            }
+
+            return NoContent();
+        }
+
+
+        [HttpGet("{ID}", Name = "GetOrderByID")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+        public async Task<ActionResult<OrderDto>> GetOrderByIDAsync(int id)
+        {
+            if (id < 1)
+            {
+                return BadRequest($"Invalid id = {id}");
+            }
+            var Order = await _service.GetOrderByIDAsync(id);
+            if (Order != null)
+            {
+                return Ok(Order);
+            }
+            return NotFound();
+        }
+
+
+
+        [HttpPost(Name = "CreatOrder")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<int>> AddOrder(CreateOrderCommand command)
+        public async Task<ActionResult<int>> CreateOrderAsync([FromBody] OrderDto request)
         {
-            if (command != null)
+           var OrderID=  await _service.PlaceOrderAsync(request);
+            if (OrderID > 0) 
             {
-                var ID = await _sender.Send(command);
-                return CreatedAtRoute($"GetOrderByID", new { Id = ID }, command);
+                return CreatedAtRoute($"GetOrderByIDAsync", new { Id = OrderID }, request);
             }
-            return BadRequest("Input data is null or invalid.");
+            return BadRequest("Order creation failed.");
+        }
+
+
+        [HttpPut(Name = "UpdateOrder")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<OrderDto>> UpdateOrderAsync([FromBody] OrderRequest request)
+        {
+
+            if (request.Id > 0)
+            {
+                var Order = await _service.UpdateOrderAsync(request);
+                if (Order != null)
+                {
+                    return Ok(Order);
+                }
+
+                return NotFound("Order not found.");
+            }
+            return BadRequest(("Order Updation failed."));
 
 
         }
+
+
+        [HttpDelete("{id}", Name = "DeleteOrder")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+
+        public async Task<ActionResult<bool>> DeleteOrderAsync(int id)
+        {
+            if (id < 1)
+            {
+                return NoContent();
+            }
+            if (await _service.SoftDeleteOrderAsync(id)) 
+            {      
+                return Ok("Order Deleted successfully ");
+            }
+
+            return BadRequest("Order not deleted");
+        }
+
 
 
     }
