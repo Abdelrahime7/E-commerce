@@ -4,7 +4,7 @@ using MediatR;
 namespace Application.Moduels.Item.Commands
 {
     public record CreateItemCommand(ItemDto itemDto) : IRequest<int>;
-    public record UpdateItemCommand(ItemResponse Response) : IRequest<ItemDto>;
+    public record UpdateItemCommand(ItemRequest Response) : IRequest<ItemDto>;
     public record DeleteItemCommnd(int ID): IRequest<bool>;
     public record SoftDeleteItemCommand(int ID) : IRequest<bool>;
 
