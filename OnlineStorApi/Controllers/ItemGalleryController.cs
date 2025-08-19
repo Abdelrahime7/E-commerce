@@ -1,6 +1,9 @@
-﻿using Application.Moduels.ItemGallery.Commands;
+﻿using Application.DTOs.ItemGallery;
+using Application.Moduels.ItemGallery.Commands;
+using Application.Moduels.ItemGallery.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using static Application.Moduels.ItemGallery.Queries.Queries;
 
 namespace OnlineStorApi.Controller
 {
@@ -16,21 +19,96 @@ namespace OnlineStorApi.Controller
         }
 
 
+        [HttpGet(Name = "GetAllItemsGalleryAysnc")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<ActionResult<IEnumerable<ItemGalleryDto>>> GetAllItemsGalleryAysnc()
+        {
+            var ItemGallerys = await _sender.Send(new GetAllItemsGalleryQuery());
 
-        [HttpPost(Name = "AddItemGallery")]
+            if (ItemGallerys.Count != 0)
+            {
+                return Ok(ItemGallerys);
+            }
+
+            return NoContent();
+        }
+
+
+        [HttpGet("{ID}", Name = "GetItemGalleryByID")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+        public async Task<ActionResult<ItemGalleryDto>> GetItemGalleryByIDAsync(int id)
+        {
+            if (id < 1)
+            {
+                return BadRequest($"Invalid id = {id}");
+            }
+            var ItemGallery = await _sender.Send(new GetItemGalleryByIdQuery(id));
+            if (ItemGallery != null)
+            {
+                return Ok(ItemGallery);
+            }
+            return NotFound();
+        }
+
+
+
+        [HttpPost(Name = "CreatItemGallery")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<int>> AddItemGallery(CreateItemGalleryCommand command)
+        public async Task<ActionResult<int>> CreateItemGalleryAsync([FromBody] ItemGalleryDto request)
         {
-            if (command != null)
+            var ItemGalleryID = await _sender.Send(new CreateItemGalleryCommand(request));
+            if (ItemGalleryID > 0)
             {
-                var ID = await _sender.Send(command);
-                return CreatedAtRoute($"GetItemGalleryByID", new { Id = ID }, command);
+                return CreatedAtRoute($"GetItemGalleryByIDAsync", new { Id = ItemGalleryID }, request);
             }
-            return BadRequest("Input data is null or invalid.");
+            return BadRequest("ItemGallery creation failed.");
+        }
+
+
+        [HttpPut(Name = "UpdateItemGallery")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ItemGalleryDto>> UpdateItemGalleryAsync([FromBody] ItemGalleryRequest request)
+        {
+
+            if (request.Id > 0)
+            {
+                var ItemGallery = await _sender.Send(new UpdateItemGalleryCommand(request));
+                if (ItemGallery != null)
+                {
+                    return Ok(ItemGallery);
+                }
+
+                return NotFound("ItemGallery not found.");
+            }
+            return BadRequest(("ItemGallery Updation failed."));
 
 
         }
+
+
+        [HttpDelete("{id}", Name = "DeleteItemGallery")]
+        public async Task<ActionResult<bool>> DeleteItemGalleryAsync(int id)
+        {
+            if (id < 1)
+            {
+                return NoContent();
+            }
+            if (await _sender.Send(new DeleteItemGalleryCommand(id)))
+            {
+                return Ok("ItemGallery Deleted successfully ");
+            }
+
+            return BadRequest("ItemGallery not deleted");
+        }
+
+
+
 
 
     }
