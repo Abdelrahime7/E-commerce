@@ -60,12 +60,12 @@ namespace OnlineStorApi.Controller
         [HttpPost(Name = "CreatInvoice")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<int>> CreateInvoiceAsync([FromBody] InvoiceRequest request)
+        public async Task<ActionResult<int>> CreateInvoiceAsync([FromBody] InvoiceDto request)
         {
-            await _sender.Send(new CreateInvoiceCommand(request));
-            if (request.Id > 0)
+           var InvoiceID = await _sender.Send(new CreateInvoiceCommand(request));
+            if (InvoiceID > 0)
             {
-                return CreatedAtRoute($"GetInvoiceByIDAsync", new { Id = request.Id }, request);
+                return CreatedAtRoute($"GetInvoiceByIDAsync", new { Id = InvoiceID }, request);
             }
             return BadRequest("Invoice creation failed.");
         }
