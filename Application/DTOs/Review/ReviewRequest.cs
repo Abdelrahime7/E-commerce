@@ -2,7 +2,7 @@
 
 namespace Application.DTOs.Review
 {
-    public record ReviewResponse
+    public record ReviewRequest
     {
         public int Id { get; set; }
         public string? Descreption { get; set; }

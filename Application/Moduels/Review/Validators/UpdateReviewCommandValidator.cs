@@ -9,11 +9,11 @@ namespace Application.Moduels.Review.Validators
 
         public UpdateReviewCommandValidator()
         {
-            RuleFor(C => C.Response.Id).NotEqual(0).NotEmpty().WithMessage("ID is required");
-            RuleFor(C => C.Response.Descreption).NotEmpty().WithMessage("Descreption is required");
-            RuleFor(C => C.Response.Date).NotEmpty().WithMessage("Date is required");
-            RuleFor(C => C.Response.CustomerId).NotEmpty().WithMessage("CustomerId is required");
-            RuleFor(C => C.Response.ItemID).NotEmpty().WithMessage("ItemID is required");
+            RuleFor(C => C.request.Id).NotEqual(0).NotEmpty().WithMessage("ID is required");
+            RuleFor(C => C.request.Descreption).NotEmpty().WithMessage("Descreption is required");
+            RuleFor(C => C.request.Date).NotEmpty().WithMessage("Date is required");
+            RuleFor(C => C.request.CustomerId).NotEmpty().WithMessage("CustomerId is required");
+            RuleFor(C => C.request.ItemID).NotEmpty().WithMessage("ItemID is required");
                           
         }
 
