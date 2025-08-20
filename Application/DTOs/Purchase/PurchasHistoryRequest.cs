@@ -2,7 +2,7 @@
 
 namespace Application.DTOs.Purchase
 {
-    public record PurchasHistoryResponse
+    public record PurchasHistoryRequest
     {
         public int Id { get; set; }
         public int OrderId { get; set; }

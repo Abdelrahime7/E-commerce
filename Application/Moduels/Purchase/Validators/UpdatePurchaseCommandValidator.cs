@@ -9,9 +9,9 @@ namespace Application.Moduels.Purchase.Validators
 
         public UpdatePurchaseCommandValidator()
         {
-            RuleFor(C => C.Response.Id).NotEmpty().WithMessage("Id is required");
-            RuleFor(C => C.Response.OrderId).NotEmpty().WithMessage("Order Id is required");
-            RuleFor(C => C.Response.CustomerId).NotEmpty().WithMessage("Customer Id is required");
+            RuleFor(C => C.request.Id).NotEmpty().WithMessage("Id is required");
+            RuleFor(C => C.request.OrderId).NotEmpty().WithMessage("Order Id is required");
+            RuleFor(C => C.request.CustomerId).NotEmpty().WithMessage("Customer Id is required");
 
 
         }
