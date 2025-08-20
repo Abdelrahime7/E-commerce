@@ -2,7 +2,8 @@
 
 namespace Application.DTOs.Person
 {
-    public record PersonResponse
+    public record PersonRequest
+
     {
         public int Id { get; set; }
         public required string FName { get; set; }

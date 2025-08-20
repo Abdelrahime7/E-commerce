@@ -16,7 +16,7 @@ namespace Application.Moduels.Person.Handlers
         {
         }
 
-        protected override int GetId(UpdatePersonCommand command) => command.Response.Id;
+        protected override int GetId(UpdatePersonCommand command) => command.request.Id;
        
     }
 
