@@ -3,7 +3,7 @@ using Domain.Enums;
 
 namespace Application.DTOs.User
 {
-    public record UserResponse
+    public record UserRequest
     {
         public int Id { get; set; }
         public string? UserName { get; set; }
