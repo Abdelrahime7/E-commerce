@@ -16,7 +16,7 @@ namespace Application.Moduels.Item.Handlers
         {
         }
 
-        protected override int GetId(UpdateItemCommand command) => command.Response.Id;
+        protected override int GetId(UpdateItemCommand command) => command.Request.Id;
        
     }
 

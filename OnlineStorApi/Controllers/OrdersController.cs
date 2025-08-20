@@ -1,10 +1,6 @@
 ﻿using Application.DTOs.Order;
 using Application.Interfaces.Iservices;
-using Application.Moduels.Order.Commands;
-using Application.Moduels.Order.Commands;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using static Application.Moduels.Order.Queries.Queries;
 
 namespace OnlineStorApi.Controller
 {

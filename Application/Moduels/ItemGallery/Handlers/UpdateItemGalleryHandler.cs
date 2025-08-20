@@ -16,7 +16,7 @@ namespace Application.Moduels.ItemGallery.Handlers
         {
         }
 
-        protected override int GetId(UpdateItemGalleryCommand command) => command.Response.Id;
+        protected override int GetId(UpdateItemGalleryCommand command) => command.request.Id;
        
     }
 

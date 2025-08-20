@@ -15,7 +15,7 @@ namespace Application.Moduels.Invoice.Handlers
         {
         }
 
-        protected override int GetId(UpdateInvoiceCommand command) => command.Response.Id;
+        protected override int GetId(UpdateInvoiceCommand command) => command.Request.Id;
        
     }
 

@@ -15,7 +15,7 @@ namespace Application.Moduels.Order.Handlers
         {
         }
 
-        protected override int GetId(UpdateOrderCommand command) => command.Response.Id;
+        protected override int GetId(UpdateOrderCommand command) => command.Request.Id;
        
     }
 

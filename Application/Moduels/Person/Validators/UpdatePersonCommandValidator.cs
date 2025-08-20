@@ -9,11 +9,11 @@ namespace Application.Moduels.Person.Validators
 
         public UpdatePersonCommandValidator()
         {
-            RuleFor(C => C.Response.Id).NotEqual(0).NotEmpty().WithMessage("ID is required");
-            RuleFor(C => C.Response.FName).NotEmpty().WithMessage("first name is required");
-            RuleFor(C => C.Response.LName).NotEmpty().WithMessage("last name is required");
-            RuleFor(C => C.Response.Phone).NotEmpty().WithMessage("phone is required");
-            RuleFor(C => C.Response.Email).NotEmpty().WithMessage("Email is required").
+            RuleFor(C => C.request.Id).NotEqual(0).NotEmpty().WithMessage("ID is required");
+            RuleFor(C => C.request.FName).NotEmpty().WithMessage("first name is required");
+            RuleFor(C => C.request.LName).NotEmpty().WithMessage("last name is required");
+            RuleFor(C => C.request.Phone).NotEmpty().WithMessage("phone is required");
+            RuleFor(C => C.request.Email).NotEmpty().WithMessage("Email is required").
                 EmailAddress().WithMessage("wrong Email format");
 
 
