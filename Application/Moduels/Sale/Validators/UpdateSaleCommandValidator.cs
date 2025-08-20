@@ -9,9 +9,9 @@ namespace Application.Moduels.Sale.Validators
 
         public UpdateSaleCommandValidator()
         {
-            RuleFor(C => C.Response.Id).NotEqual(0).NotEmpty().WithMessage("ID is required");
-            RuleFor(C => C.Response.TotalFees).NotEmpty().WithMessage("Total Fees is required");
-            RuleFor(C => C.Response.OrderId).NotEmpty().WithMessage("Order Id is required");
+            RuleFor(C => C.request.Id).NotEqual(0).NotEmpty().WithMessage("ID is required");
+            RuleFor(C => C.request.TotalFees).NotEmpty().WithMessage("Total Fees is required");
+            RuleFor(C => C.request.OrderId).NotEmpty().WithMessage("Order Id is required");
 
 
         }
