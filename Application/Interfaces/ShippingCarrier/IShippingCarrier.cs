@@ -1,14 +1,12 @@
-﻿using Domain.Shipping.ShippingService;
+﻿using Application.Interfaces.Iservices;
+using Domain.Shipping.ShippingService;
 
 
 namespace Application.Interfaces.ShippingCarrier
 {
-    public interface IShippingCarrier
+    public interface IShippingCarrier : IShippingService
     {
-        Task <ShipmentResult>CreateShipmentAsync(ShipmentRequest Request);
-        public Task<bool> CancelShipmentAsync(ShipmentRequest request);
-
-        public Task<bool> ConfirmShipementRecieptAsync(ShipmentRequest request);
+        
       
     }
 }

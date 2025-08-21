@@ -6,7 +6,9 @@ namespace Application.Interfaces.Iservices
 {
     public interface IShippingService
     {
-        public  Task<ShipmentResult> CreateShipmentAsync(ShipmentRequest request);
+        Task<ShipmentResult> CreateShipmentAsync(ShipmentRequest Request);
+        public Task<bool> CancelShipmentAsync(ShipmentRequest request);
+        public Task<bool> ConfirmShipementRecieptAsync(ShipmentRequest request);
     }
 
 }
