@@ -6,39 +6,29 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineStorApi.Controller
 {
-    [Route("api/Cart")]
+    [Route("api/COD")]
     [ApiController]
     public class CODController : ControllerBase
     {
-       
-        private readonly ICODService _service;
 
-        public CODController(ICODService service)
+        private readonly IPaymentService _service;
+
+        public CODController(IPaymentService service)
         {
             _service = service;
         }
 
-        [HttpPost(Name = "InitiateAsync")]
+        [HttpPost(Name = "CreateCheckoutSessionAsync")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult>  InitiateAsync(Cart cart)
+      public async Task<ActionResult<string>> CreateCheckoutSessionAsync(decimal amount, string currency)
         {
-            await _service.InitiateAsync(cart);
+          
+             await _service.CreateCheckoutSessionAsync(amount, currency);
             return Ok();
         }
 
-        [HttpPost(Name = "ConfirmAsync")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<bool>> ConfirmAsync(int id)
-        {
-            await _service.ConfirmAsync(id);
-            return Ok();
-
-        }
 
     }
-
-
 }
 
