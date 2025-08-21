@@ -6,14 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineStorApi.Controller
 {
-    [Route("api/Cart")]
+    [Route("api/CardPayment")]
     [ApiController]
-    public class CODController : ControllerBase
+    public class CardPaymentController : ControllerBase
     {
        
         private readonly ICODService _service;
 
-        public CODController(ICODService service)
+        public CardPaymentController(ICODService service)
         {
             _service = service;
         }
