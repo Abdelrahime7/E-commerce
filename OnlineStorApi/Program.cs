@@ -4,7 +4,7 @@ using DotNetEnv;
 using Infrastructure;
 using Infrastructure.ADbContext;
 using Microsoft.EntityFrameworkCore;
-using OnlineStorApi;
+using OnlineStorApi.Confige;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +18,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(O => O.UseSqlServer(builder.Configuration.GetConnectionString("Constr")));
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+
+var jwtOptions = builder.Configuration.GetSection("Jwt").Get<JwtOptions>();
+// Auth 
+builder.Services.JwtConfige(jwtOptions);
+
+
 
 builder.LoggConfig();
 builder.StripConfige();
