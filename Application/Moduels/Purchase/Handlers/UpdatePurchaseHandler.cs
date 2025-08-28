@@ -16,7 +16,7 @@ namespace Application.Moduels.Purchase.Handlers
         {
         }
 
-        protected override int GetId(UpdatePurchaseCommand command) => command.Response.Id;
+        protected override int GetId(UpdatePurchaseCommand command) => command.request.Id;
        
     }
 

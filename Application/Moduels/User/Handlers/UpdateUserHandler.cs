@@ -16,7 +16,7 @@ namespace Application.Moduels.User.Handlers
         {
         }
 
-        protected override int GetId(UpdateUserCommand command) => command.Response.Id;
+        protected override int GetId(UpdateUserCommand command) => command.request.Id;
        
     }
 

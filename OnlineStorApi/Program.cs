@@ -5,6 +5,7 @@ using Infrastructure;
 using Infrastructure.ADbContext;
 using Microsoft.EntityFrameworkCore;
 using OnlineStorApi.Confige;
+using Shared.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 

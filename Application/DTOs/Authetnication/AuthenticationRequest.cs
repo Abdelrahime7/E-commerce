@@ -1,5 +1,4 @@
-﻿
-namespace Application.DTOs.User
+﻿namespace Application.DTOs.Authetnication
 {
     public record AuthenticationRequest
     {
@@ -9,6 +8,5 @@ namespace Application.DTOs.User
        
 
     }
-
 
 }

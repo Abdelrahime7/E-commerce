@@ -14,9 +14,7 @@ namespace Application.Moduels.sale.Handlers
         public UpdateSaleHandler(IMapper mapper, IGenericRepository<IEntity> repository,
             ILogger<UpdateSaleHandler>logger) : base(mapper, repository, logger)
         {
-        }
-
-        protected override int GetId(UpdateSaleCommand command) => command.Response.Id;
+        }        protected override int GetId(UpdateSaleCommand command) => command.request.Id;
        
     }
 

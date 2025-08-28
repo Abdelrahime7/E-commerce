@@ -11,9 +11,11 @@ using Infrastructure.Services.OrderService;
 using Infrastructure.Services.PricingService;
 using Infrastructure.Services.PyamentService;
 using Infrastructure.Services.ShippingService;
+using Infrastructure.Services.TokenService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Stripe;
 
 namespace Infrastructure;
 
@@ -54,6 +56,8 @@ public static class DependencyInjection
         services.AddScoped<ICODService, CODPaymentService>();
         services.AddScoped<IShippingService, ShippingService>();
         services.AddScoped<IInventoryService, ManageInventoryService>();
+       services.AddScoped<ITokenService,TokenServic>();
+
 
 
 

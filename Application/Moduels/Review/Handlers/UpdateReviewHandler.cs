@@ -16,7 +16,7 @@ namespace Application.Moduels.Review.Handlers
         {
         }
 
-        protected override int GetId(UpdateReviewCommand command) => command.Response.Id;
+        protected override int GetId(UpdateReviewCommand command) => command.request.Id;
        
     }
 
