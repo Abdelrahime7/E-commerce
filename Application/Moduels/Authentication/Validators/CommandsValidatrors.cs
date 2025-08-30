@@ -1,17 +1,19 @@
 ﻿using Application.Moduels.Customer.Commands;
 using FluentValidation;
+using static Application.Moduels.Authentication.Queries.Queries;
 
-namespace Application.Moduels.Customer.Validators
+namespace Application.Moduels.Authentication.Validators
 {
 
-    public class DeleteCustomerCommandValidator : AbstractValidator<SoftDeleteCustomerCommand>
+    public class AuthenticatValidator : AbstractValidator<AuthenticateUserQuery>
     {
 
 
-        public DeleteCustomerCommandValidator()
+        public AuthenticatValidator()
         {
-            RuleFor(C => C.ID).NotEqual(0).NotEmpty().WithMessage("ID is required");
-          
+            RuleFor(U =>U.Request.Password).NotEmpty().WithMessage("Password is required");
+            RuleFor(U => U.Request.UserName).NotEmpty().WithMessage("UserName is required");
+
         }
 
     }
