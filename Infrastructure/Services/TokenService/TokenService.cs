@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Shared.Config;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Infrastructure.Services.TokenService
@@ -28,25 +29,32 @@ namespace Infrastructure.Services.TokenService
                 {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email,user.Person.Email),
-          
+
                 };
 
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SecretKey));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SecretKey));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-                var token = new JwtSecurityToken(
-                    issuer: _jwtOptions.Issuer,
-                    audience: _jwtOptions.Audience,
-                    claims: claims,
-                    expires: DateTime.UtcNow.AddMinutes(_jwtOptions.ExpiryMinutes),
-                    signingCredentials: creds
-                );
+            var token = new JwtSecurityToken(
+                issuer: _jwtOptions.Issuer,
+                audience: _jwtOptions.Audience,
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(_jwtOptions.ExpiryMinutes),
+                signingCredentials: creds
+            );
             _logger.LogInformation("JWT token generated successfully for user ID: {UserId}. Token expires at: {Expiry}", user.Id, token.ValidTo);
             return new JwtSecurityTokenHandler().WriteToken(token);
-            
-        }
 
+        }        
+        public string GenerateRefreshToken()
+        {
+            var randomBytes = new byte[64];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomBytes);
+            return Convert.ToBase64String(randomBytes);
+        }
 
     }
 }
+
 

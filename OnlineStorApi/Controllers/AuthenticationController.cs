@@ -2,6 +2,7 @@
 using Application.DTOs.Authetnication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using static Application.Moduels.Authentication.Commands.Commands;
 using static Application.Moduels.Authentication.Queries.Queries;
 namespace OnlineStorApi.Controllers
 {
@@ -29,6 +30,22 @@ namespace OnlineStorApi.Controllers
 
             return Ok(result);
         }
+
+
+        [HttpPost(Name = "LogOut")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> LogOut([FromBody] LogOutRequest request)
+        {
+            var result = await _sender.Send(new LogoutCommand(request));
+
+            if (!result.Success)
+                return Unauthorized(result);
+
+            return Ok(result);
+        }
+
+
 
 
 
