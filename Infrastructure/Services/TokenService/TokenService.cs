@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Iservices;
 using Domain.entities;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Config;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,16 +12,19 @@ namespace Infrastructure.Services.TokenService
     public class TokenServic : ITokenService
     {
         private readonly JwtOptions _jwtOptions;
-        public TokenServic(JwtOptions jwtOptions)
+        private readonly ILogger<TokenServic> _logger;
+
+        public TokenServic(JwtOptions jwtOptions, ILogger<TokenServic> logger)
         {
             _jwtOptions = jwtOptions;
+            _logger= logger;
         }
 
         public string GenerateToken(User user)
         {
-         
-          
-                var claims = new[]
+            _logger.LogInformation("Generating JWT token for user ID: {UserId}, Email: {Email}", user.Id, user.Person.Email);
+
+            var claims = new[]
                 {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email,user.Person.Email),
@@ -37,8 +41,8 @@ namespace Infrastructure.Services.TokenService
                     expires: DateTime.UtcNow.AddMinutes(_jwtOptions.ExpiryMinutes),
                     signingCredentials: creds
                 );
-
-                return new JwtSecurityTokenHandler().WriteToken(token);
+            _logger.LogInformation("JWT token generated successfully for user ID: {UserId}. Token expires at: {Expiry}", user.Id, token.ValidTo);
+            return new JwtSecurityTokenHandler().WriteToken(token);
             
         }
 
