@@ -25,7 +25,7 @@ namespace OnlineStorApi.Controllers
         {
             var result = await _sender.Send(new AuthenticateUserQuery(request));
 
-            if (!result.IsAuthenticated)
+            if (!result.IsSuccess)
                 return Unauthorized(result);
 
             return Ok(result);
@@ -45,7 +45,19 @@ namespace OnlineStorApi.Controllers
             return Ok(result);
         }
 
+        [HttpPost(Name = "Refresh")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
 
+        public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequest request)
+        {
+            var result = await _sender.Send(new RefreshCommand(request));
+
+            if (!result.IsSuccess)
+                return Unauthorized(result);
+
+            return Ok(result);
+        }
 
 
 

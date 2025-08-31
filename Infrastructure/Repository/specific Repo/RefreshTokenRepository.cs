@@ -15,7 +15,7 @@ namespace Infrastructure.Repository.specific_Repo
         private readonly DbSet<RefreshToken> _dbSet=context.Set< RefreshToken>();
 
         public async Task<RefreshToken?> GetRefrechTockenAsync(string refreshToken) =>
-            await _dbSet.FirstOrDefaultAsync(r => r.Token == refreshToken);
+            await _dbSet.FirstOrDefaultAsync(r => r.Token == refreshToken&& !r.IsRevoked);
 
         public async Task ReplaceTockenAsync(string oldToken ,string newToken)
 

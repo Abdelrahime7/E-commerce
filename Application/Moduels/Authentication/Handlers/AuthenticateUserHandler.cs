@@ -41,37 +41,28 @@ namespace Application.Moduels.Customer.Handlers
             if (user is null)
             {
                 _logger.LogWarning("Authentication failed for user: {Username}", request?.Request?.UserName);
-                return new AuthResult
-                {
-                    IsAuthenticated = false,
-                    Token = null,
-                    Message = "Invalid username or password."
-                };
+                return AuthResult.Failure("Invalid username or password.");
+             
             }
 
             _logger.LogInformation("User authenticated successfully. Generating token and refresh Token for user: {Username}", user.UserName);
 
             var token = _tokenService.GenerateToken(user);
             var RefreshToken = _tokenService.GenerateRefreshToken();
-
+            Random r = new Random();
             await _refreshTokenRepository.AddAsync(new RefreshToken
             {
                 Token = RefreshToken,
-                Id = user.Id,
-                UserId = Guid.NewGuid(),
+                Id =  r.Next(),
+                UserId = user.Id,
                 CreatedDate = DateTime.UtcNow,
                 ExpiryDate = DateTime.UtcNow.AddDays(7),
                 IsRevoked = false
             });
             _logger.LogInformation("Tokens generated successfully for user: {Username}", user.UserName);
 
-            return new AuthResult
-            {
-                IsAuthenticated = true,
-                Token = token,
-                RefreshToken = RefreshToken,
-                Message = "Authentication successful."
-            };
+            return AuthResult.Success(token, RefreshToken);
+          
 
         }
 

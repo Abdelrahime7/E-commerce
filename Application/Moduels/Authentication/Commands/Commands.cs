@@ -7,6 +7,10 @@ namespace Application.Moduels.Authentication.Commands
     public static class Commands
     {
         public record LogoutCommand(LogOutRequest Request) : IRequest<LogOutResult>;
+        public record  RefreshCommand(RefreshTokenRequest Request) : IRequest<AuthResult>;
+
+
+
 
     }
 }

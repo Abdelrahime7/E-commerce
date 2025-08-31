@@ -10,4 +10,5 @@ namespace Application.DTOs.Authetnication
     {
         public string RefreshToken { get; set; }
     }
+
 }
