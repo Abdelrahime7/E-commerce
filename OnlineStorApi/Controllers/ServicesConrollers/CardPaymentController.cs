@@ -1,44 +1,35 @@
 ﻿
 
 using Application.Interfaces.Iservices;
-using Domain.Cart;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineStorApi.Controller
 {
-    [Route("api/CardPayment")]
+    [Authorize(Roles = "User,Guest,Customer")]
+    [Route("api/COD")]
     [ApiController]
     public class CardPaymentController : ControllerBase
     {
-       
-        private readonly ICODService _service;
 
-        public CardPaymentController(ICODService service)
+        private readonly IPaymentService _service;
+
+        public CardPaymentController(IPaymentService service)
         {
             _service = service;
         }
 
-        [HttpPost(Name = "InitiateAsync")]
+        [HttpPost(Name = "CreateCheckoutSessionAsync")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult>  InitiateAsync(Cart cart)
+      public async Task<ActionResult<string>> CreateCheckoutSessionAsync(decimal amount, string currency)
         {
-            await _service.InitiateAsync(cart);
+          
+             await _service.CreateCheckoutSessionAsync(amount, currency);
             return Ok();
         }
 
-        [HttpPost(Name = "ConfirmAsync")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<bool>> ConfirmAsync(int id)
-        {
-            await _service.ConfirmAsync(id);
-            return Ok();
-
-        }
 
     }
-
-
 }
 

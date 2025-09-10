@@ -2,11 +2,13 @@
 using Application.Moduels.Item.Commands;
 using Application.Moduels.Item.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Application.Moduels.Item.Queries.Queries;
 
 namespace OnlineStorApi.Controller
 {
+
     [Route("api/Items")]
     [ApiController]
     public class ItemController : ControllerBase
@@ -19,7 +21,7 @@ namespace OnlineStorApi.Controller
         }
 
 
-
+        [Authorize(Roles = "Admin,User")]
         [HttpGet(Name = "GetAllItemsAysnc")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -35,7 +37,7 @@ namespace OnlineStorApi.Controller
             return NoContent();
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("{ID}", Name = "GetItemByID")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -56,7 +58,7 @@ namespace OnlineStorApi.Controller
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost(Name = "CreatItem")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -70,7 +72,7 @@ namespace OnlineStorApi.Controller
             return BadRequest("Item creation failed.");
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPut(Name = "UpdateItem")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -91,7 +93,7 @@ namespace OnlineStorApi.Controller
 
 
         }
-
+        [Authorize(Roles = "Admin")]
 
         [HttpDelete("{id}", Name = "DeleteItem")]
         public async Task<ActionResult<bool>> DeleteItemAsync(int id)

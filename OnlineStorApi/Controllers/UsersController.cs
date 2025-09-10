@@ -1,13 +1,15 @@
 ﻿
 using Application.DTOs.User;
 using Application.Moduels.User.Commands;
-using Application.Moduels.User.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Application.Moduels.User.Queries.Queries;
 
 namespace OnlineStorApi.Controllers
 {
+    [Authorize(Roles = "Admin")]
+
     [Route("api/Users")]
     [ApiController]
 

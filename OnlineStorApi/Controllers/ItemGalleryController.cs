@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.ItemGallery;
 using Application.Moduels.ItemGallery.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Application.Moduels.ItemGallery.Queries.Queries;
 
@@ -17,7 +18,7 @@ namespace OnlineStorApi.Controller
             _sender = sender;
         }
 
-
+        [Authorize(Roles = "Admin,User")]
         [HttpGet(Name = "GetAllItemsGalleryAysnc")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -33,7 +34,7 @@ namespace OnlineStorApi.Controller
             return NoContent();
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("{ID}", Name = "GetItemGalleryByID")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -54,7 +55,7 @@ namespace OnlineStorApi.Controller
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost(Name = "CreatItemGallery")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -68,7 +69,7 @@ namespace OnlineStorApi.Controller
             return BadRequest("ItemGallery creation failed.");
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPut(Name = "UpdateItemGallery")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -90,7 +91,7 @@ namespace OnlineStorApi.Controller
 
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}", Name = "DeleteItemGallery")]
         public async Task<ActionResult<bool>> DeleteItemGalleryAsync(int id)
         {

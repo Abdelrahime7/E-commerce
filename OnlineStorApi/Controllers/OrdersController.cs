@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.Order;
 using Application.Interfaces.Iservices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineStorApi.Controller
@@ -16,7 +17,7 @@ namespace OnlineStorApi.Controller
 
 
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet(Name = "GetAllOrdersAysnc")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -32,7 +33,7 @@ namespace OnlineStorApi.Controller
             return NoContent();
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("{ID}", Name = "GetOrderByID")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -53,7 +54,7 @@ namespace OnlineStorApi.Controller
         }
 
 
-
+        [Authorize(Roles = "Admin,User,Guest")]
         [HttpPost(Name = "CreatOrder")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -67,7 +68,7 @@ namespace OnlineStorApi.Controller
             return BadRequest("Order creation failed.");
         }
 
-
+        [Authorize(Roles = "Admin,User,Guest")]
         [HttpPut(Name = "UpdateOrder")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -89,7 +90,7 @@ namespace OnlineStorApi.Controller
 
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}", Name = "DeleteOrder")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

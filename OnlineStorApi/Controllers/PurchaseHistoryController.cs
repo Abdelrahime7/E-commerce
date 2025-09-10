@@ -2,6 +2,7 @@
 using Application.Moduels.Purchase.Commands;
 using Application.Moduels.Purchase.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Application.Moduels.Purchase.Queries.Queries;
 
@@ -18,7 +19,7 @@ namespace OnlineStorApi.Controller
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet(Name = "GetAllPurchasesAysnc")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -34,7 +35,7 @@ namespace OnlineStorApi.Controller
             return NoContent();
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("{ID}", Name = "GetPurchaseByID")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -55,7 +56,7 @@ namespace OnlineStorApi.Controller
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost(Name = "CreatPurchase")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -69,13 +70,13 @@ namespace OnlineStorApi.Controller
             return BadRequest("Purchase creation failed.");
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPut(Name = "UpdatePurchase")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<PurchasHistoryDto>> UpdatePurchaseAsync([FromBody] PurchasHistoryRequest request)
         {
 
@@ -94,7 +95,7 @@ namespace OnlineStorApi.Controller
 
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}", Name = "DeletePurchase")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

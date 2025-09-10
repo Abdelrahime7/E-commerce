@@ -2,10 +2,13 @@
 
 using Application.Interfaces.Iservices;
 using Domain.Cart;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineStorApi.Controller
 {
+    [Authorize(Roles = "User,Guest,Customer")]
+
     [Route("api/Cart")]
     [ApiController]
     public class CartController : ControllerBase

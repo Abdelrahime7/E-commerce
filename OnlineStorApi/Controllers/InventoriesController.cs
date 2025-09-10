@@ -4,12 +4,14 @@ using Application.Interfaces.Iservices;
 using Application.Moduels.Inventory.Commands;
 using Domain.Enums;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Application.Moduels.Inventory.Queries.Queries;
 
 
 namespace OnlineStorApi.Controller
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/Inventories")]
     [ApiController]
     public class InventoriesController : ControllerBase

@@ -1,12 +1,14 @@
 ﻿using Application.DTOs.Invoice;
 using Application.Moduels.Invoice.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Application.Moduels.Invoice.Queries.Queries;
 
 
 namespace OnlineStorApi.Controller
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/Invoices")]
     [ApiController]
     public class InvoiceController : ControllerBase
@@ -18,7 +20,7 @@ namespace OnlineStorApi.Controller
         }
 
 
-
+        [Authorize(Roles = "Admin")]
 
         [HttpGet(Name = "GetAllInvoicesAysnc")]
         [ProducesResponseType(StatusCodes.Status200OK)]

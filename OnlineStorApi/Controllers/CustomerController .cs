@@ -1,12 +1,14 @@
 ﻿using Application.DTOs.Customer;
 using Application.Moduels.Customer.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Application.Moduels.Customer.Queries.Queries;
 namespace OnlineStorApi.Controllers
 {
     [Route("api/Customer")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class CustomersController : ControllerBase
     {
         private readonly ISender _sender;
@@ -18,7 +20,7 @@ namespace OnlineStorApi.Controllers
 
 
 
-
+        
         [HttpGet(Name = "GetAllCustomersAysnc")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

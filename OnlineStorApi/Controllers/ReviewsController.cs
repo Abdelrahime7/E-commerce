@@ -2,6 +2,7 @@
 using Application.Moduels.Review.Commands;
 using Application.Moduels.Review.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Application.Moduels.Review.Queries.Queries;
 
@@ -20,7 +21,7 @@ namespace OnlineStorApi.Controller
 
 
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet(Name = "GetAllReviewsAysnc")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -36,7 +37,7 @@ namespace OnlineStorApi.Controller
             return NoContent();
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("{ID}", Name = "GetReviewByID")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -57,7 +58,7 @@ namespace OnlineStorApi.Controller
         }
 
 
-
+        [Authorize(Roles = "User,Geust,Customer")]
         [HttpPost(Name = "CreatReview")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -71,13 +72,14 @@ namespace OnlineStorApi.Controller
             return BadRequest("Review creation failed.");
         }
 
+        [Authorize(Roles = "User,Geust,Customer")]
 
         [HttpPut(Name = "UpdateReview")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ReviewDto>> UpdateReviewAsync([FromBody] ReviewRequest request)
         {
 
@@ -96,6 +98,7 @@ namespace OnlineStorApi.Controller
 
         }
 
+        [Authorize(Roles = "User,Geust,Customer")]
 
         [HttpDelete("{id}", Name = "DeleteReview")]
         [ProducesResponseType(StatusCodes.Status201Created)]

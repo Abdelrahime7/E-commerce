@@ -1,12 +1,14 @@
 ﻿using Application.DTOs.Sale;
 using Application.Moduels.Sale.Commands;
-using Application.Moduels.Sale.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Application.Moduels.Sale.Queries.Queries;
 
 namespace OnlineStorApi.Controller
 {
+    [Authorize(Roles = "Admin")]
+
     [Route("api/Sales")]
     [ApiController]
     public class SalesController : ControllerBase
@@ -16,6 +18,7 @@ namespace OnlineStorApi.Controller
         {
             _sender = sender;
         }
+        [Authorize(Roles = "Admin")]
 
         [HttpGet(Name = "GetAllSalesAysnc")]
         [ProducesResponseType(StatusCodes.Status200OK)]

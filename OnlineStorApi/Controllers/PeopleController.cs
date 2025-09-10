@@ -2,11 +2,13 @@
 using Application.Moduels.Person.Commands;
 using Application.Moduels.Person.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Application.Moduels.Person.Queries.Queries;
 
 namespace OnlineStorApi.Controller
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/People")]
     [ApiController]
     public class PeopleContoller : ControllerBase

@@ -4,10 +4,12 @@ using Application.DTOs.Item;
 using Application.Interfaces.Iservices;
 using Domain.Cart;
 using Domain.entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineStorApi.Controller
 {
+    [Authorize(Roles = "User,Guest,Customer")]
     [Route("api/Pricing")]
     [ApiController]
     public class PricingController : ControllerBase
