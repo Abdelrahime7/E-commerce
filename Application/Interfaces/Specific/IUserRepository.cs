@@ -10,5 +10,6 @@ namespace Application.Interface
     public interface IUserRepository  : IGenericRepository<User> 
     {
         Task<User> CheckUserAsync(AuthenticationRequest request);
+      
     }
 }

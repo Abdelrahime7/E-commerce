@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Iservices;
+﻿using Application.Interfaces.Generic;
+using Application.Interfaces.Iservices;
 using Domain.entities;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -14,22 +15,28 @@ namespace Infrastructure.Services.TokenService
     {
         private readonly JwtOptions _jwtOptions;
         private readonly ILogger<TokenServic> _logger;
+        private readonly IGetRols _Rols;
 
-        public TokenServic(JwtOptions jwtOptions, ILogger<TokenServic> logger)
+        public TokenServic(JwtOptions jwtOptions, ILogger<TokenServic> logger,
+            IGetRols Rols)
         {
             _jwtOptions = jwtOptions;
             _logger= logger;
+            _Rols= Rols;
+
+
         }
 
         public string GenerateToken(User user)
         {
             _logger.LogInformation("Generating JWT token for user ID: {UserId}, Email: {Email}", user.Id, user.Person.Email);
+            var Role = _Rols.Role(user);
 
             var claims = new[]
                 {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email,user.Person.Email),
-
+            new Claim(ClaimTypes.Role,Role)
                 };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SecretKey));
