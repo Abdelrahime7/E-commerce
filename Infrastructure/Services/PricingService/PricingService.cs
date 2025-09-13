@@ -1,38 +1,54 @@
 ﻿using Application.DTOs.Item;
 using Application.Interfaces.Iservices;
+using Application.Interfaces.Specific;
 using Domain.entities;
 using Domain.Enums;
 using Microsoft.Extensions.Logging;
+using Stripe;
+using System.Threading.Tasks;
+using Customer = Domain.entities.Customer;
 
 namespace Infrastructure.Services.PricingService
 {
     public class PricingService : IPricingService
     {
         private readonly ILogger<PricingService> _logger;
+        private IDisacountsRepository _countsRepository;
 
-        public PricingService(ILogger<PricingService> logger)
+        public PricingService(ILogger<PricingService> logger,
+            IDisacountsRepository countsRepository)
         {
             _logger = logger;
+            _countsRepository = countsRepository;
         }
 
-        public decimal ApplyDiscounts(decimal Price,int  Quantity, Customer customer)
+        public async Task<decimal> ApplyCustomerDiscounts(decimal Price,Customer customer)
         {
-           
+
 
             decimal discount = 0m;
-            _logger.LogInformation("Applying discounts for customer type {CustomerType} and quantity {Quantity}", customer.type, Quantity);
+            _logger.LogInformation("Applying discounts for customer type {CustomerType}", customer.type);
 
             // Example: Loyalty-based discount
-            if (customer.type == EnCustomerType. Premium)
+            if (customer.type == EnCustomerType.Premium)
             {
-              
-                discount +=Price * 0.10m; // 10% discount
+                var disValue = await _countsRepository.GetValuebytype("Premium");
+                discount += Price * disValue; // 10% discount
             }
             else if (customer.type == EnCustomerType.Standard)
             {
-                discount += Price * 0.05m; // 5% discount
+                var disValue = await _countsRepository.GetValuebytype("Standard");
+
+                discount += Price * disValue; // 5% discount
             }
-            
+            return discount;
+        }
+
+        public async Task<decimal> ApplyQuantityDiscounts(decimal Price, int Quantity)// Personalized discounts
+        {
+            decimal discount = 0m;
+            _logger.LogInformation("Applying discounts for customer type {Quantity}", Quantity);
+            var disValue = await _countsRepository.GetValuebytype("Bulk");
 
             // Example: Bulk discount
             if (Quantity >= 10)
@@ -87,7 +103,7 @@ namespace Infrastructure.Services.PricingService
                 throw new ArgumentNullException(nameof(customer));
 
             var basePrice = CalculatePrice(item, quantity);
-            var discount = ApplyDiscounts(item.Price, quantity, customer);
+            var discount = ApplyCustomerDiscounts(item.Price, customer).Result;
             var netPrice = basePrice - discount;
             var tax = CalculateTax(item, netPrice);
             var finalPrice = netPrice + tax;

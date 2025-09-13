@@ -11,7 +11,7 @@ namespace Infrastructure.Repository.specific_Repo
       
         private readonly DbSet<Inventory> _dbSet;
 
-        public InventoryRepository(DbSet<Inventory> dbSet, AppDbContext dbContext) : base(dbContext)
+        public InventoryRepository(AppDbContext dbContext) : base(dbContext)
         {
             _dbSet = dbContext.Set<Inventory>();
         }

@@ -7,7 +7,7 @@ namespace Domain.Entities
     {
          public int Id {  get; set; }
         public string Type { get; set; }
-        public float  Percentag { get; set; }
+        public decimal  Percentag { get; set; }
         public bool IsDeleted { get ; set; }
     }
 }
