@@ -1,4 +1,5 @@
 ﻿using Domain.entities;
+using Domain.Entities;
 using Domain.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,8 @@ namespace Infrastructure.ADbContext
         public DbSet<User> Users { get; set; }
         public DbSet<Sale> Salles { get; set; }
         public DbSet<PurchaseHistory> PurchasesHistory { get; set; }
+        public DbSet<Disacount> Disacounts {  get; set; }
+
 
 
 

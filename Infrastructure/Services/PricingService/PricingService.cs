@@ -25,6 +25,7 @@ namespace Infrastructure.Services.PricingService
             // Example: Loyalty-based discount
             if (customer.type == EnCustomerType. Premium)
             {
+              
                 discount +=Price * 0.10m; // 10% discount
             }
             else if (customer.type == EnCustomerType.Standard)

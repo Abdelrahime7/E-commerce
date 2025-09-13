@@ -16,6 +16,7 @@ namespace Infrastructure.Repository.GenericRepo
         {
             _dbContext = context;
             _dbSet = _dbContext.Set<T>();
+            
 
         }
 
