@@ -25,17 +25,13 @@ namespace Infrastructure.ADbContext
         public DbSet<Disacount> Disacounts {  get; set; }
 
 
+        
 
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            var configu = new ConfigurationBuilder().AddJsonFile("jsconfig1.json").Build();
-            var constr = configu.GetSection("Constr").Value;
-            optionsBuilder.UseSqlServer(constr);
-        }
+       
 
         public override int SaveChanges()
         {
+           
             foreach (var entry in ChangeTracker.Entries<ISoftDelete>())
             {
                 if (entry.State == EntityState.Deleted)

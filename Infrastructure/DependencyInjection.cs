@@ -27,6 +27,8 @@ public static class DependencyInjection
 
         services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
+
+
         //Register your services here
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 

@@ -36,7 +36,7 @@ namespace OnlineStorApi.Controller
 
         public ActionResult<decimal> ApplyDiscounts(decimal price, int quantity ,Customer customer)
         {
-            var Price = _service.ApplyDiscounts(price, quantity, customer);
+            var Price = _service.ApplyCustomerDiscounts(price, customer);
             return Ok(Price);
         }
 

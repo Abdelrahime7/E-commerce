@@ -19,7 +19,7 @@ namespace Application.Moduels.Item.Handlers
 
 
         public CreateItemHandler(IMapper mapper, IItemUnitOfWork unitOfWork,
-            Logger<CreateItemHandler> logger)
+            ILogger<CreateItemHandler> logger)
         {
             _logger = logger;
             _mapper = mapper;

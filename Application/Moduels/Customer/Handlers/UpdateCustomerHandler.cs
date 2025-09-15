@@ -9,10 +9,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Moduels.Customer.Handlers
 {
-    public class DeleteInventoryHandler : UpdateHandler<UpdateCustomerCommand,CustomerDto>
+    public class UpdateCustomerHandler : UpdateHandler<UpdateCustomerCommand,CustomerDto>
     {
-        public DeleteInventoryHandler(IMapper mapper, IGenericRepository<IEntity> repository,
-            ILogger<DeleteInventoryHandler> logger) : base(mapper, repository, logger)
+        public UpdateCustomerHandler(IMapper mapper, IGenericRepository<IEntity> repository,
+            ILogger<UpdateCustomerHandler> logger) : base(mapper, repository, logger)
         {
         }
 

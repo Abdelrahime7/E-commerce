@@ -1,5 +1,6 @@
 using Application.Mapper.CustomersProfile;
 using Application.Moduels.Common.Behaviors;
+using Application.Moduels.Customer.Handlers;
 using Application.Moduels.Customer.Validators;
 using Application.Moduels.User.Handlers;
 using FluentValidation;
@@ -14,6 +15,7 @@ public static class DependencyInjection
     {
         //Mediatr:
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateUserHandler).Assembly));
+     services.AddMediatR(cfg=> cfg.RegisterServicesFromAssembly(typeof(AuthenticateUserHandler).Assembly));
 
         //Auto Mapper :
         services.AddAutoMapper(typeof(CustomerMapping));

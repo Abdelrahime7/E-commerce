@@ -13,9 +13,8 @@ namespace Infrastructure.ADbContext.Configuration
 
             builder.Property(U => U.Password).HasMaxLength(255);
             builder.Property(U => U.UserName).HasMaxLength(255);
-            builder.Property(U => U.IsAdmin);
+           
             builder.Property(U => U.IsGuest);
-            builder.Property(U => U.EnPermission);
 
             builder.HasOne(U => U.Person).WithOne(P => P.User).HasForeignKey<User>(U => U.PersonID)
                 .OnDelete(DeleteBehavior.Restrict);
