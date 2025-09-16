@@ -11,10 +11,10 @@ namespace Infrastructure.Services.OrderService
     public class OrderService : IOrderService
     {
         
-        private readonly Mediator _mediator;
+        private readonly IMediator _mediator;
         
 
-        public OrderService(Mediator mediator)
+        public OrderService(IMediator mediator)
         {
             _mediator = mediator;
         }

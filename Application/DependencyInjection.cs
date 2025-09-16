@@ -14,8 +14,8 @@ public static class DependencyInjection
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         //Mediatr:
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateUserHandler).Assembly));
-     services.AddMediatR(cfg=> cfg.RegisterServicesFromAssembly(typeof(AuthenticateUserHandler).Assembly));
+         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateUserHandler).Assembly));
+         services.AddMediatR(cfg=> cfg.RegisterServicesFromAssembly(typeof(AuthenticateUserHandler).Assembly));
 
         //Auto Mapper :
         services.AddAutoMapper(typeof(CustomerMapping));

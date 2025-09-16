@@ -1,6 +1,8 @@
 using Application.Interface;
 using Application.Interfaces.Generic;
 using Application.Interfaces.Iservices;
+using Application.Interfaces.ShippingCarrier;
+using Application.Interfaces.Specific;
 using Application.Interfaces.Specific.IunitOW;
 using Infrastructure.ADbContext;
 using Infrastructure.Repository.GenericRepo;
@@ -21,9 +23,10 @@ namespace Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
-        var connectionString = configuration["DefaultConnection"];
+        var configue = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        var connectionString = configue.GetSection("Constr").Value;
 
         services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
@@ -43,6 +46,10 @@ public static class DependencyInjection
         services.AddScoped<IReviewRepository, ReviewRepository>();
         services.AddScoped<ISaleRepository, SaleRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        services.AddScoped<IDisacountsRepository, DisacountsRepository>();
+        services.AddScoped<IShippingCarrier,ShippingCarrier>();
+
         services.AddScoped<IGetRols, GetRols>();
 
 
