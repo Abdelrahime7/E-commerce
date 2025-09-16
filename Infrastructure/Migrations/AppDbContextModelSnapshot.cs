@@ -22,6 +22,26 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Entities.Disacount", b =>
+                {
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Percentag")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("IsDeleted");
+
+                    b.ToTable("Disacounts", (string)null);
+                });
+
             modelBuilder.Entity("Domain.entities.Customer", b =>
                 {
                     b.Property<int>("Id")
@@ -37,6 +57,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Point")
+                        .HasColumnType("int");
+
+                    b.Property<int>("type")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -102,6 +125,9 @@ namespace Infrastructure.Migrations
                     b.Property<short>("Quantity")
                         .HasColumnType("smallint");
 
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ItemID");
@@ -139,6 +165,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime>("ProdDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TaxRate")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("UnitType")
                         .HasColumnType("int");
@@ -329,12 +358,6 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("EnPermission")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsAdmin")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -347,6 +370,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("PersonID")
                         .HasColumnType("int");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(255)
